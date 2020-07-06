@@ -2,3 +2,37 @@ extends layout
 
 block content
   h1= "회원가입페이지"
+  form(action='/api/register', method='POST')
+    div
+      input(type="checkbox")
+      | 선택 정보를 입력하시겠어요? 
+      a(href="/register") 내용보기
+    div 
+      input(type="text", placeholder="주소찾기")
+      |
+      input(type="button", value="주소찾기")
+    div
+      input(type="text", placeholder="주소")
+    div
+      input(type="text", placeholder="상세 주소")
+    
+
+    div
+      input(type="checkbox")
+      | 전체 약관에 동의합니다 
+    div  
+      input(type="checkbox")
+      | 필수 항목에 동의합니다
+    div
+      a(href="/register") 배민사장님광장 이용약관
+      |
+      a(href="/register") 개인정보 수집이용 동의
+    div
+      input(type="checkbox")
+      | 광고성 정보 수신 동의 (선택) 
+    div 
+      a 만 14세 이상 회원만 가입 가능합니다.
+      |
+      a(href="/register") 내용보기
+
+    input(type='submit', value='가입완료') 
