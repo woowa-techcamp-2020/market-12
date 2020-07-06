@@ -1,5 +1,7 @@
 extends layout
 
+
+
 block content
   h1= "회원가입페이지"
   form(action='/api/register', method='POST')
@@ -18,17 +20,17 @@ block content
     
 
     div
-      input(type="checkbox")
+      input(type="checkbox", id="allowAll", onclick="checkboxCheck(this)")
       | 전체 약관에 동의합니다 
     div  
-      input(type="checkbox")
+      input(type="checkbox", id="allowRequired")
       | 필수 항목에 동의합니다
     div
       a(href="/register") 배민사장님광장 이용약관
       |
       a(href="/register") 개인정보 수집이용 동의
     div
-      input(type="checkbox")
+      input(type="checkbox", id="allowAdvertising")
       | 광고성 정보 수신 동의 (선택) 
     div 
       a 만 14세 이상 회원만 가입 가능합니다.
