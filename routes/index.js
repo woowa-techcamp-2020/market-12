@@ -8,7 +8,7 @@ router.get("/", function (req, res, next) {
 
 /* GET login page. */
 router.get("/login", function (req, res, next) {
-  res.render("login");
+  res.render("login", { title: "배민 사장님광장" });
 });
 
 /* GET register page. */

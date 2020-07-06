@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+  form(action='/api/login', method='POST')
+    div
+      input(type='text', name='아이디', value='', placeholder="아이디를 입력해주세요")
+    div       
+      input(type='password', name='패스워드', value='',placeholder="비밀번호를 입력해주세요")
+    div
+      | 
+      input(type='checkbox', name='아이디저장', value='') 
+      | 아이디저장 
+      a(href="/login") 아이디/비밀번호 찾기
+      | 
+      a(href="/register") 회원가입
+    input(type='submit', value='로그인')
