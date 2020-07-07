@@ -77,3 +77,23 @@ applyValidation("input_name", validateName, (valid) =>
 applyValidation("input_phone", validatePhoneNumber, (valid) =>
   valid ? "" : "유효하지 않은 번호입니다."
 );
+
+/**
+ * 전체 약관 동의 체크 함수
+ */
+function checkboxCheck(checkbox) {
+  let a = document.getElementById("allowAll");
+  let b = document.getElementById("allowRequired");
+  let c = document.getElementById("allowAdvertising");
+  if (a.checked) {
+    b.checked = true;
+    c.checked = true;
+  } else {
+    b.checked = false;
+    c.checked = false;
+  }
+
+  //   if (!b.checked || !c.checked) {
+  //     a.checked = false;
+  //   }
+}
