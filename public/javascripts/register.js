@@ -58,6 +58,18 @@ function applyEmailValidation() {
 
 applyEmailValidation();
 
+const select = document.getElementById("select_email_provider");
+select.addEventListener("change", (e) => {
+  const provider = e.target.value;
+  const providerInput = document.getElementById("input_email_provider");
+  if (provider === "") {
+    providerInput.readOnly = false;
+  } else {
+    providerInput.value = provider;
+    providerInput.readOnly = true;
+  }
+});
+
 applyValidation("input_name", validateName, (valid) =>
   valid ? "" : "이름에 특수문자 또는 숫자를 포함할 수 없습니다."
 );
