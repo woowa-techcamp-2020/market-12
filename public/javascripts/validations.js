@@ -9,7 +9,9 @@ function validateId(id) {
  * @param  {string} password
  * @returns {boolean}
  */
-function validatePassword(password) {}
+function validatePassword(password) {
+  return /^[a-z0-9]{8,20}$/.test(id);
+}
 /**
  * @param  {string} username
  * @param  {string} provider
