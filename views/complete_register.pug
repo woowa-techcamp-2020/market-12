@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    div logo
+    h1 회원이 되셨습니다.
+
+    a(href="/") 메인으로 →
+
+    div
+        div
+            span 이름
+            span= user.name
+        div
+            span 아이디
+            span= user.id
+        div
+            span 이메일
+            span= user.name
+        div
+            span 휴대폰
+            span= user.phone
+    div
+        | 위 내용은 
+        a(href="#") 내 정보 관리
+        | 에서 수정하실 수 있습니다.
