@@ -81,19 +81,45 @@ applyValidation("input_phone", validatePhoneNumber, (valid) =>
 /**
  * 전체 약관 동의 체크 함수
  */
-function checkboxCheck(checkbox) {
-  let a = document.getElementById("allowAll");
-  let b = document.getElementById("allowRequired");
-  let c = document.getElementById("allowAdvertising");
-  if (a.checked) {
-    b.checked = true;
-    c.checked = true;
+function allowAllCheck(checkbox) {
+  let all = document.getElementById("allowAll");
+  let essential = document.getElementById("agreeEssential");
+  let advertisement = document.getElementById("agreeAdvertisement");
+  if (all.checked) {
+    essential.checked = true;
+    advertisement.checked = true;
   } else {
-    b.checked = false;
-    c.checked = false;
+    essential.checked = false;
+    advertisement.checked = false;
   }
+}
 
-  //   if (!b.checked || !c.checked) {
-  //     a.checked = false;
-  //   }
+function checkEssential(checkbox) {
+  let all = document.getElementById("allowAll");
+  let essential = document.getElementById("agreeEssential");
+  let advertisement = document.getElementById("agreeAdvertisement");
+  if (!essential.checked || !advertisement.checked) {
+    all.checked = false;
+  } else {
+    all.checked = true;
+  }
+}
+
+function checkAdvertisement(checkbox) {
+  let all = document.getElementById("allowAll");
+  let essential = document.getElementById("agreeEssential");
+  let advertisement = document.getElementById("agreeAdvertisement");
+  if (!essential.checked || !advertisement.checked) {
+    all.checked = false;
+  } else {
+    all.checked = true;
+  }
+}
+
+function optionalInfoCheck(checkbox) {
+  let optional = document.getElementById("optionalInfoCheck");
+  let addressButton = document.getElementById("findAddressButton");
+
+  if (optional.checked) {
+  }
 }
