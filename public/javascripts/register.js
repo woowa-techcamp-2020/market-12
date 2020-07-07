@@ -122,5 +122,6 @@ function optionalInfoCheck(checkbox) {
 
   if (optional.checked) {
     console.log(addressButton);
+    console.log("test");
   }
 }
