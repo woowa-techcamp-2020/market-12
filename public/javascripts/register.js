@@ -78,7 +78,10 @@ applyValidation("input_phone", validatePhoneNumber, (valid) =>
   valid ? "" : "유효하지 않은 번호입니다."
 );
 
+document.getElementById("phone_auth_input").style.display = "none";
 function startPhoneAuth() {
+  document.getElementById("input_phone").readOnly = true;
+  document.getElementById("phone_auth_input").style.display = "block";
   const RemainTime = {
     minuite: 2,
     second: 1,
@@ -101,6 +104,8 @@ function startPhoneAuth() {
       clearInterval(intervalId);
       endPhoneAuth();
       intervalId = null;
+      document.getElementById("label_phone_auth_remain_time").innerText =
+        "유효시간을 초과하였습니다.";
     } else {
       document.getElementById(
         "label_phone_auth_remain_time"
@@ -113,18 +118,44 @@ function startPhoneAuth() {
 }
 
 //TODO
-function endPhoneAuth() {}
+function endPhoneAuth() {
+  clearInterval(phoneAuthIntervalId);
+  document.getElementById("label_phone_auth_remain_time").innerText = "";
+}
 
 let phoneAuthIntervalId = null;
 document.getElementById("button_phone_auth").addEventListener("click", (e) => {
-  clearInterval(phoneAuthIntervalId);
-  if (validatePassword(document.getElementById("input_phone").value)) {
+  endPhoneAuth();
+  if (validatePhoneNumber(document.getElementById("input_phone").value)) {
     phoneAuthIntervalId = startPhoneAuth();
   } else {
     document.getElementById("input_phone_label").innerText =
       "유효하지 않은 번호입니다.";
   }
 });
+
+function confirmPhoneAuth() {
+  console.log(1);
+}
+
+function rejectPhoneAuth() {
+  console.log(2);
+}
+
+function handlePhoneAuth() {
+  const authNumber = document.getElementById("input_phone_auth_number").value;
+  fetch("/api/phone_auth?auth_number=" + authNumber).then((res) => {
+    if (res.ok) {
+      confirmPhoneAuth();
+      endPhoneAuth();
+    } else {
+      rejectPhoneAuth();
+    }
+  });
+}
+document
+  .getElementById("button_phone_auth_confirm")
+  .addEventListener("click", handlePhoneAuth);
 
 /**
  * 전체 약관 동의 체크 함수
