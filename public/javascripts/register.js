@@ -121,5 +121,6 @@ function optionalInfoCheck(checkbox) {
   let addressButton = document.getElementById("findAddressButton");
 
   if (optional.checked) {
+    console.log(addressButton);
   }
 }
