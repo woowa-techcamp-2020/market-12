@@ -78,6 +78,54 @@ applyValidation("input_phone", validatePhoneNumber, (valid) =>
   valid ? "" : "유효하지 않은 번호입니다."
 );
 
+function startPhoneAuth() {
+  const RemainTime = {
+    minuite: 2,
+    second: 1,
+    subtractASecond: function () {
+      this.second--;
+      if (this.second < 0) {
+        if (this.minuite === 0) return null;
+        this.minuite--;
+        this.second = 59;
+      }
+      return (
+        ("0" + this.minuite).slice(-2) + ":" + ("0" + this.second).slice(-2)
+      );
+    },
+  };
+
+  let intervalId = setInterval(() => {
+    const remainTime = RemainTime.subtractASecond();
+    if (!remainTime) {
+      clearInterval(intervalId);
+      endPhoneAuth();
+      intervalId = null;
+    } else {
+      document.getElementById(
+        "label_phone_auth_remain_time"
+      ).innerText = remainTime;
+    }
+  }, 1000);
+  const label = document.getElementById("label_phone_auth_remain_time");
+
+  return intervalId;
+}
+
+//TODO
+function endPhoneAuth() {}
+
+let phoneAuthIntervalId = null;
+document.getElementById("button_phone_auth").addEventListener("click", (e) => {
+  clearInterval(phoneAuthIntervalId);
+  if (validatePassword(document.getElementById("input_phone").value)) {
+    phoneAuthIntervalId = startPhoneAuth();
+  } else {
+    document.getElementById("input_phone_label").innerText =
+      "유효하지 않은 번호입니다.";
+  }
+});
+
 /**
  * 전체 약관 동의 체크 함수
  */
