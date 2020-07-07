@@ -33,7 +33,7 @@ function validateEmail(username, provider) {
  * @returns {boolean}
  */
 function validateName(name) {
-  return /^[a-zA-Z가-힣]+$/.test(name);
+  return /^[a-zA-Z가-힣\s]+$/.test(name);
 }
 /**
  * @param  {string} phoneNumber
