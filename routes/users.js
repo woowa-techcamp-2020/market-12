@@ -11,7 +11,7 @@ router.post("/register", function (req, res) {
 
   console.log(user);
 
-  res.send("로그인 완료");
+  res.send("회원가입완료");
 });
 
 module.exports = router;
