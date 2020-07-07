@@ -27,6 +27,11 @@ a {
   display: flex;
 }
 
+.flex_row {
+  display: flex;
+  align-items: stretch;
+}
+
 .input {
   border: 1px solid black;
   padding: 1rem;
@@ -41,6 +46,15 @@ a {
 }
 
 .button {
+  display: inline-block;
+  border: 1px solid black;
+  background-color: transparent;
+  width: 100%;
+  min-width: 3rem;
+}
+
+.margin-left10 {
+  margin-left: 10px;
 }
 
 .input_button {
@@ -88,4 +102,8 @@ a {
 
 #overlay-wrapper-header {
   background-color: skyblue;
+}
+
+#registerForm > div {
+  margin-bottom: 10px;
 }
