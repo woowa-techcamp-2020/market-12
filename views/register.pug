@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1= "회원가입페이지"
-  form(action='/api/register', method='POST').centered_layout.flex_stretch
+  form(action='/api/register', id="registerForm", method='POST').centered_layout.flex_stretch
     div.guide_label
       | 필수 정보를 입력해주세요.
     div
@@ -43,18 +43,37 @@ block content
     div
       label(for="phone_auth_label" id="input_password_label")
     div
-      input.input(type="checkbox", id="optionalInfoCheck", onclick="optionalInfoCheck(this)")
+      input.input(type="checkbox", id="optionalInfoCheck", onclick="activeAddressButton(this)")
       | 선택 정보를 입력하시겠어요? 
       a(href="/register") 내용보기
     div.full_width
-      input.input.input_notrow(type="text", name="postNumber",placeholder="우편번호")
+      input.input.notrow(type="text", id="postNumber", name="postNumber",placeholder="우편번호", disabled, onclick="onAddressModal()")
       |
-      input.input.input_notrow(type="button", id="findAddressButton", value="주소찾기", disabled)
+      input.input.notrow(type="button", id="findAddressButton", value="주소찾기", disabled, onclick="onAddressModal()")
     div
-      input.input(type="text", name="address", placeholder="주소")
+      input.input(type="text", id="address", name="address", placeholder="주소",disabled, onclick="onAddressModal()")
     div
-      input.input(type="text", name="detail", placeholder="상세 주소")
-    
+      input.input(type="text", id="detail", name="detail", placeholder="상세 주소",disabled, onclick="onAddressModal()")
+    div(id="overlay", onclick="offAddressModal()")
+      div(id="overlay-wrapper", onclick="stopPropagation(event)")
+        div(id="overlay-wrapper-header")
+          h1 주소검색
+          input(type="button", value="X", onclick="offAddressModal()")
+        div(id="overlay-wrapper-contents")
+          div(id="overlay-wrapper-contents-search") 
+            input(type="text", id="addressSearchInput", placeholder="예) 판교역로 235, 분당 주공, 삼평동 681")
+          div(id="overlay-wrapper-contents-search")
+            h3 tip
+            p 아래와 같은 조합으로 검색하시면 더욱 정확한 결과가 검색됩니다.
+            p 도로면 + 건물번호
+            p 예) 판교역로 235, 제주 첨단로 242
+            p 지역명(동/리) + 번지
+            p 예) 삼평동 681, 제주 영평동 2181
+            p 지역명(동/리) + 건물명(아파트명)
+            p 예) 분당 주공, 연수동 주공3차
+            p 사서함명 + 번호
+            p 예) 분당우체국사서함 1~100
+        div(id="overlay-wrapper-footer")
 
     div
       input(type="checkbox", id="allowAll", onclick="allowAllCheck(this)")
