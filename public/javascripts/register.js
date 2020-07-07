@@ -1,3 +1,6 @@
+/**
+ * 전체 약관 동의 체크 함수
+ */
 function checkboxCheck(checkbox) {
   let a = document.getElementById("allowAll");
   let b = document.getElementById("allowRequired");
