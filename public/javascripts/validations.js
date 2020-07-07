@@ -39,4 +39,6 @@ function validateName(name) {
  * @param  {string} phoneNumber
  * @returns {boolean}
  */
-function validatePhoneNumber(phoneNumber) {}
+function validatePhoneNumber(phoneNumber) {
+  return /^01[01679]\d{7,8}$/.text(phoneNumber);
+}
