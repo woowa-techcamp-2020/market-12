@@ -9,8 +9,9 @@ function validateId(id) {
  * @param  {string} password
  * @returns {boolean}
  */
+//숫자 필수
 function validatePassword(password) {
-  return /^[a-z0-9]{8,20}$/.test(id);
+  return /^[a-z0-9]{8,20}$/.test(password);
 }
 /**
  * @param  {string} username
@@ -40,5 +41,5 @@ function validateName(name) {
  * @returns {boolean}
  */
 function validatePhoneNumber(phoneNumber) {
-  return /^01[01679]\d{7,8}$/.text(phoneNumber);
+  return /^01[01679]\d{7,8}$/.test(phoneNumber);
 }
