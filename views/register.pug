@@ -6,7 +6,10 @@ block content
     div
       | 필수 정보를 입력해주세요.
     div
-      input(type="text", name="id", placeholder="아이디*(4~20자)", required)
+      div
+        input(id="input_id" type="text", name="id", placeholder="아이디*(4~20자)", required)
+      div
+        label(for="input_id" id="input_id_label")
     div
       input(type="password", name="password", placeholder="비밀번호*(영문+숫자, 8~20자)", required)
     div
@@ -61,3 +64,5 @@ block content
       a(href="/register") 내용보기
 
     input(type='submit', value='가입완료') 
+  script(src="/javascripts/validations.js")
+  script(src="/javascripts/register.js")
