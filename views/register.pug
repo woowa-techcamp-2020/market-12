@@ -47,9 +47,8 @@ block content
       | 선택 정보를 입력하시겠어요? 
       a(href="/register") 내용보기
     div.full_width
-      input.input.notrow(type="text", id="postNumber", name="postNumber",placeholder="우편번호", disabled, onclick="onAddressModal()")
-      |
-      input.input.notrow(type="button", id="findAddressButton", value="주소찾기", disabled, onclick="onAddressModal()")
+      input.input.input_notrow(type="text", id="postNumber", name="postNumber",placeholder="우편번호", disabled, onclick="onAddressModal()")
+      input.input.input_notrow(type="button", id="findAddressButton", value="주소찾기", disabled, onclick="onAddressModal()")
     div
       input.input(type="text", id="address", name="address", placeholder="주소",disabled, onclick="onAddressModal()")
     div
