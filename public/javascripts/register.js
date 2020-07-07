@@ -33,7 +33,30 @@ applyValidation(
     valid ? "" : "위 비밀번호와 일치하지 않습니다. 다시 입력해주세요."
 );
 
-//TODO: email
+//Email vaildaion
+function applyEmailValidation() {
+  const usernameInput = document.getElementById("input_email_username");
+  const providerInput = document.getElementById("input_email_provider");
+  const label = document.getElementById("input_email_label");
+
+  providerInput.addEventListener("focusout", (e) => {
+    if (e.target.value === "") label.innerText = "이메일을 입력해 주세요.";
+    else if (!validateEmailPrivider(e.target.value)) {
+      //input에 클래스 추가
+      label.innerText = "유효하지 않은 이메일입니다.";
+    }
+  });
+
+  usernameInput.addEventListener("focusout", (e) => {
+    if (e.target.value === "") label.innerText = "이메일을 입력해 주세요.";
+    else if (!validateEmailUsername(e.target.value)) {
+      //input에 클래스 추가
+      label.innerText = "유효하지 않은 이메일입니다.";
+    }
+  });
+}
+
+applyEmailValidation();
 
 applyValidation("input_name", validateName, (valid) =>
   valid ? "" : "이름에 특수문자 또는 숫자를 포함할 수 없습니다."
