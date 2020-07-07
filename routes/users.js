@@ -14,4 +14,16 @@ router.post("/register", function (req, res) {
   res.send("로그인 완료");
 });
 
+/* GET compelete register page. */
+router.get("/phone_auth", function (req, res, next) {
+  const number = req.query.auth_number;
+  if (number.length === 6) {
+    res.status(200);
+    res.json({ result: "ok" });
+  } else {
+    res.status(401);
+    res.json({ result: "error" });
+  }
+});
+
 module.exports = router;
