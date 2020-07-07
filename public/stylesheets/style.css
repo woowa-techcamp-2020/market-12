@@ -51,6 +51,9 @@ a {
   background-color: transparent;
   width: 100%;
   min-width: 3rem;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 1rem;
 }
 
 .margin-left10 {
@@ -61,6 +64,8 @@ a {
 }
 
 .submit_button {
+  background-color: blue;
+  color: white;
 }
 
 .guide_label {
