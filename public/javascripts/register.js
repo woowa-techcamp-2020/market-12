@@ -84,7 +84,7 @@ function startPhoneAuth() {
   document.getElementById("div_phone_auth").style.display = "inherit";
   const RemainTime = {
     minuite: 2,
-    second: 1,
+    second: 0,
     subtractASecond: function () {
       this.second--;
       if (this.second < 0) {
@@ -92,14 +92,20 @@ function startPhoneAuth() {
         this.minuite--;
         this.second = 59;
       }
+    },
+    toString: function () {
       return (
         ("0" + this.minuite).slice(-2) + ":" + ("0" + this.second).slice(-2)
       );
     },
   };
 
+  document.getElementById(
+    "label_phone_auth_remain_time"
+  ).innerText = RemainTime.toString();
   let intervalId = setInterval(() => {
-    const remainTime = RemainTime.subtractASecond();
+    RemainTime.subtractASecond();
+    const remainTime = RemainTime.toString();
     if (!remainTime) {
       clearInterval(intervalId);
       endPhoneAuth();
