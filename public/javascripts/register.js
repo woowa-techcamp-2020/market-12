@@ -7,7 +7,15 @@ function applyValidation(inputId, validation, label) {
   const inputDom = document.getElementById(inputId);
   const labelDom = document.getElementById(inputId + "_label");
   inputDom.addEventListener("focusout", (e) => {
-    labelDom.innerText = label(validation(e.target.value));
+    const valid = validation(e.target.value);
+    labelDom.innerText = label(valid);
+    if (valid) {
+      inputDom.classList.remove("input_alert");
+      labelDom.classList.remove("alert_label");
+    } else {
+      inputDom.classList.add("input_alert");
+      labelDom.classList.add("alert_label");
+    }
   });
 }
 
