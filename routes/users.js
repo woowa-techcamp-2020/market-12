@@ -1,4 +1,5 @@
 var express = require("express");
+const usersDB = require("../models/userModel.js");
 var router = express.Router();
 
 /* GET users listing. */
@@ -9,7 +10,16 @@ router.get("/", function (req, res, next) {
 router.post("/register", function (req, res) {
   let user = req.body;
 
-  console.log("테스트하자", user);
+  // validation 실패 시
+
+  // validation 성공 시 디비에 저장
+  usersDB.findOne({ id: user.id }, function (err, doc) {
+    console.log("있네 이거", doc);
+    if (!doc) {
+      usersDB.insert(user);
+    }
+  });
+
   res.render("complete_register", { user });
 });
 

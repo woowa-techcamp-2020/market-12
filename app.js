@@ -7,8 +7,6 @@ var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-const DataStore = require("nedb");
-const db = new DataStore({ filename: "user.db", autoload: true });
 
 var app = express();
 

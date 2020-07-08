@@ -1,5 +1,3 @@
-import { getUsers } from "./register";
-
 function test() {
   document.getElementById("input_id").value = "testId";
   document.getElementById("input_password").value = "testpw";
@@ -14,5 +12,9 @@ function test() {
   document.getElementById("agreeEssential").checked = "true";
   document.getElementById("agreeAdvertisement").checked = "true";
 
-  getUsers.getUsers();
+  getUser();
+}
+
+function getUser() {
+  console.log("hello");
 }

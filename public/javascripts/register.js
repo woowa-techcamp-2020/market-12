@@ -3,7 +3,6 @@
  * @param  {(string)=>boolean} validation - validate function that returns true if valid.
  * @param  {(boolean)=>string} label - a function returns label text
  */
-
 function applyValidation(inputId, validation, label) {
   const inputDom = document.getElementById(inputId);
   const labelDom = document.getElementById(inputId + "_label");
@@ -173,10 +172,3 @@ function searchAddress() {
   let address = document.getElementById("addressSearchInput").value;
   console.log("주소를 검색하고 있는가", address);
 }
-
-/** 회원 db 저장 */
-function getUsers() {
-  console.log("db출력");
-}
-
-export { getUsers };
