@@ -43,6 +43,7 @@ a {
 }
 
 .input_alert {
+  border-color: red;
 }
 
 .button {
@@ -61,6 +62,9 @@ a {
 }
 
 .input_button {
+  color: blue;
+  border-color: blue;
+  background-color: transparent;
 }
 
 .submit_button {
@@ -69,18 +73,29 @@ a {
 }
 
 .guide_label {
+  font-size: 16px;
+}
+
+.bold_label {
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .description_label {
+  font-size: 12px;
+  color: gray;
 }
 
 .alert_label {
+  color: red;
 }
 
 .blue_label {
+  color: blue;
 }
 
 .header_label {
+  font-size: 20px;
 }
 #overlay {
   position: fixed; /* Sit on top of the page content */
