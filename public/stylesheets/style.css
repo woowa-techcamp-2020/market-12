@@ -19,12 +19,22 @@ a {
   flex-wrap: nowrap;
 }
 
+.simple_border {
+  border: 1px solid black;
+}
+
 .flex_stretch {
   align-items: stretch;
 }
 
 .flex_container {
   display: flex;
+}
+
+.flex_column {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .flex_row {
@@ -55,6 +65,8 @@ a {
   font-weight: 700;
   font-size: 1rem;
   padding: 1rem;
+  text-align: center;
+  text-decoration: none;
 }
 
 .margin-left10 {
@@ -95,8 +107,10 @@ a {
 }
 
 .header_label {
-  font-size: 20px;
+  font-size: 25px;
+  margin-bottom: 1rem;
 }
+
 #overlay {
   position: fixed; /* Sit on top of the page content */
   display: none; /* Hidden by default */
@@ -134,10 +148,9 @@ a {
 #div_terms_of_use a {
   font-size: 16px !important;
 }
-<<<<<<< HEAD
 #div_phone_auth input {
   border: none;
-=======
+}
 
 .logo {
   width: 70%;
@@ -145,5 +158,21 @@ a {
 
 .logo_img {
   width: 100%;
->>>>>>> develop
+}
+
+#main_page {
+  padding: 2rem;
+  width: 400px;
+}
+
+#main_page ul {
+  list-style: none;
+  display: flex;
+  margin-left: auto;
+}
+
+#main_page li + li::before {
+  content: "|";
+  margin: 5px;
+  color: gray;
 }
