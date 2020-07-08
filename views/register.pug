@@ -35,12 +35,14 @@ block content
       label.description_label(id="input_name_label" for="input_name")
     div.flex_row
       input.input.input_notrow(id="input_phone" type="text", name="phone", placeholder="휴대폰*", required)
-      button.button.margin-left10(type="button") 인증받기
+      button.button.margin-left10(id="button_phone_auth", type="button") 인증받기
     div
       label.description_label(for="input_phone" id="input_phone_label")
-    div.flex_row
-      input.input.input_notrow(type="text", placeholder="인증번호 6자리 입력", id="phone_check")
-      button.button.margin-left10(type="button") 확인
+    div.flex_row#div_phone_auth
+      div.input.input_notrow
+        input(type="text", placeholder="인증번호 6자리 입력", id="input_phone_auth")
+        span#label_phone_auth_remain_time
+      button.button.margin-left10(id="button_phone_auth_confirm", type="button") 확인
     div
       label.description_label(for="phone_auth_label" id="input_password_label")
     div

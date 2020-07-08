@@ -134,3 +134,6 @@ a {
 #div_terms_of_use a {
   font-size: 16px !important;
 }
+#div_phone_auth input {
+  border: none;
+}

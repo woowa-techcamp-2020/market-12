@@ -78,10 +78,10 @@ applyValidation("input_phone", validatePhoneNumber, (valid) =>
   valid ? "" : "유효하지 않은 번호입니다."
 );
 
-document.getElementById("phone_auth_input").style.display = "none";
+document.getElementById("div_phone_auth").style.display = "none";
 function startPhoneAuth() {
   document.getElementById("input_phone").readOnly = true;
-  document.getElementById("phone_auth_input").style.display = "block";
+  document.getElementById("div_phone_auth").style.display = "inherit";
   const RemainTime = {
     minuite: 2,
     second: 1,
@@ -123,6 +123,7 @@ function endPhoneAuth() {
   document.getElementById("label_phone_auth_remain_time").innerText = "";
 }
 
+// 핸드폰 인증 버튼 클릭 이벤트 설정
 let phoneAuthIntervalId = null;
 document.getElementById("button_phone_auth").addEventListener("click", (e) => {
   endPhoneAuth();
@@ -143,7 +144,7 @@ function rejectPhoneAuth() {
 }
 
 function handlePhoneAuth() {
-  const authNumber = document.getElementById("input_phone_auth_number").value;
+  const authNumber = document.getElementById("input_phone_auth").value;
   fetch("/api/phone_auth?auth_number=" + authNumber).then((res) => {
     if (res.ok) {
       confirmPhoneAuth();
