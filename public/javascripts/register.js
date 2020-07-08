@@ -136,7 +136,7 @@ document.getElementById("button_phone_auth").addEventListener("click", (e) => {
 });
 
 function confirmPhoneAuth() {
-  console.log(1);
+  document.getElementById("div_phone_auth").style.display = "none";
 }
 
 function rejectPhoneAuth() {
@@ -205,11 +205,13 @@ function activeAddressButton(checkbox) {
 
   if (optional.checked) {
     addressButton.disabled = false;
+    addressButton.classList.add("input_button");
     postNumber.disabled = false;
     address.disabled = false;
     detail.disabled = false;
   } else {
     addressButton.disabled = true;
+    addressButton.classList.remove("input_button");
     postNumber.disabled = true;
     address.disabled = true;
     detail.disabled = true;
