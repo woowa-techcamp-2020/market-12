@@ -4,7 +4,6 @@
  * @param  {(boolean)=>string} label - a function returns label text
  */
 function applyValidation(inputId, validation, label) {
-  console.log("is it work?", inputId);
   const inputDom = document.getElementById(inputId);
   const labelDom = document.getElementById(inputId + "_label");
   inputDom.addEventListener("focusout", (e) => {
@@ -48,21 +47,35 @@ function applyEmailValidation() {
   const providerInput = document.getElementById("input_email_provider");
   const label = document.getElementById("input_email_label");
 
-  providerInput.addEventListener("focusout", (e) => {
-    if (e.target.value === "") label.innerText = "이메일을 입력해 주세요.";
-    else if (!validateEmailPrivider(e.target.value)) {
-      //input에 클래스 추가
-      label.innerText = "유효하지 않은 이메일입니다.";
+  function check() {
+    let valid = true;
+    if (providerInput.value === "") label.innerText = "이메일을 입력해 주세요.";
+    else if (!validateEmailPrivider(providerInput.value)) {
+      providerInput.classList.add("input_alert");
+      valid = false;
+    } else {
+      providerInput.classList.remove("input_alert");
     }
-  });
 
-  usernameInput.addEventListener("focusout", (e) => {
-    if (e.target.value === "") label.innerText = "이메일을 입력해 주세요.";
-    else if (!validateEmailUsername(e.target.value)) {
-      //input에 클래스 추가
-      label.innerText = "유효하지 않은 이메일입니다.";
+    if (usernameInput.value === "") label.innerText = "이메일을 입력해 주세요.";
+    else if (!validateEmailUsername(usernameInput.value)) {
+      usernameInput.classList.add("input_alert");
+      valid = false;
+    } else {
+      usernameInput.classList.remove("input_alert");
     }
-  });
+
+    if (valid) {
+      label.innerText = "";
+      label.classList.remove("alert_label");
+    } else {
+      label.innerText = "유효하지 않은 이메일입니다.";
+      label.classList.add("alert_label");
+    }
+  }
+
+  providerInput.addEventListener("focusout", check);
+  usernameInput.addEventListener("focusout", check);
 }
 
 applyEmailValidation();
@@ -132,7 +145,6 @@ function startPhoneAuth() {
   return intervalId;
 }
 
-//TODO
 function endPhoneAuth() {
   clearInterval(phoneAuthIntervalId);
   document.getElementById("label_phone_auth_remain_time").innerText = "";
