@@ -19,10 +19,10 @@ block content
       input.input(id="input_password_check", type="password", name="password_check", placeholder="비밀번호 재확인*", required)
     div
       label.description_label(for="input_password_check" id="input_password_check_label")
-    div
-      input.input.input_notrow(id="input_email_username" type="text", name="email_username", placeholder="이메일 앞자리*", required)
+    div.flex_row
+      input.input(id="input_email_username" type="text", name="email_username", placeholder="이메일 앞자리*", required)
       | @
-      input.input.input_notrow(id="input_email_provider" type="text", name="email_provider", placeholder="이메일 뒺자리*", required)
+      input.input(id="input_email_provider" type="text", name="email_provider", placeholder="이메일 뒺자리*", required)
     div
       label(for="input_email_username" id="input_email_label")
     div
@@ -34,24 +34,23 @@ block content
       input.input(id="input_name" type="text", name="name", placeholder="이름*", required)
     div
       label(id="input_name_label" for="input_name")
-    div
+    div.flex_row
       input.input.input_notrow(id="input_phone" type="text", name="phone", placeholder="휴대폰*", required)
-      button(type="button") 인증받기
+      button.button.margin-left10(type="button") 인증받기
     div
       label(for="input_phone" id="input_phone_label")
-    div
+    div.flex_row
       input.input.input_notrow(type="text", placeholder="인증번호 6자리 입력", id="phone_check")
-      button(type="button") 확인
+      button.button.margin-left10(type="button") 확인
     div
       label(for="phone_auth_label" id="input_password_label")
     div
-      input.input(type="checkbox", id="optionalInfoCheck", onclick="activeAddressButton(this)")
+      input(type="checkbox", id="optionalInfoCheck", onclick="activeAddressButton(this)")
       | 선택 정보를 입력하시겠어요? 
       a(href="/register") 내용보기
-    div.full_width
-      input.input.notrow(type="text", id="postNumber", name="postNumber",placeholder="우편번호", disabled, onclick="onAddressModal()")
-      |
-      input.input.notrow(type="button", id="findAddressButton", value="주소찾기", disabled, onclick="onAddressModal()")
+    div.flex_row
+      input.input(type="text", id="postNumber", name="postNumber",placeholder="우편번호", disabled, onclick="onAddressModal()")
+      input.input(type="button", id="findAddressButton", value="주소찾기", disabled, onclick="onAddressModal()")
     div
       input.input(type="text", id="address", name="address", placeholder="주소",disabled, onclick="onAddressModal()")
     div
@@ -95,7 +94,7 @@ block content
       |
       a(href="/register") 내용보기
 
-    input(type='submit', value='가입완료') 
+    input.button.submit_button(type='submit', value='가입완료') 
   
   script(src="/javascripts/validations.js")
   script(src="/javascripts/register.js")
