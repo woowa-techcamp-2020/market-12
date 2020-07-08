@@ -4,6 +4,7 @@
  * @param  {(boolean)=>string} label - a function returns label text
  */
 function applyValidation(inputId, validation, label) {
+  console.log("is it work?", inputId);
   const inputDom = document.getElementById(inputId);
   const labelDom = document.getElementById(inputId + "_label");
   inputDom.addEventListener("focusout", (e) => {
@@ -17,13 +18,6 @@ function applyValidation(inputId, validation, label) {
       labelDom.classList.add("alert_label");
     }
   });
-}
-function idValidation() {
-  applyValidation("input_id", validateId, (valid) =>
-    valid
-      ? "입력하신 아이디로 사용이 가능합니다."
-      : "아이디는 4~20자의 영 소문자, 숫자, 특수기호(_), (-)만 사용 가능합니다. "
-  );
 }
 
 applyValidation("input_id", validateId, (valid) =>
