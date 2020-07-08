@@ -79,15 +79,18 @@ block content
     div  
       input(type="checkbox", id="agreeEssential", name="agreeEssential", onclick="checkEssential(this)")
       span.guide_label 필수 항목에 동의합니다
-    div
-      a(href="/register") 배민사장님광장 이용약관
-      a(href="/register") 개인정보 수집이용 동의
+    div#div_terms_of_use
+      a.description_label(href="/register") 배민사장님광장 이용약관
+      | 
+      a.description_label(href="/register") 개인정보 수집이용 동의
     div
       input(type="checkbox", id="agreeAdvertisement", name="agreeAdvertisement", onclick="checkAdvertisement(this)")
       span.guide_label 광고성 정보 수신 동의 (선택) 
-    div 
-      a 만 14세 이상 회원만 가입 가능합니다.
-      a(href="/register") 내용보기
+    ul
+      li.description_label
+        span 만 14세 이상 회원만 가입 가능합니다.
+        | 
+        a(href="/register") 내용보기
 
     input.button.submit_button(type='submit', value='가입완료') 
   
