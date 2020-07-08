@@ -127,6 +127,7 @@ function startPhoneAuth() {
 function endPhoneAuth() {
   clearInterval(phoneAuthIntervalId);
   document.getElementById("label_phone_auth_remain_time").innerText = "";
+  document.getElementById("input_phone_auth").value = "";
 }
 
 // 핸드폰 인증 버튼 클릭 이벤트 설정
@@ -143,6 +144,10 @@ document.getElementById("button_phone_auth").addEventListener("click", (e) => {
 
 function confirmPhoneAuth() {
   document.getElementById("div_phone_auth").style.display = "none";
+  document.getElementById("button_phone_auth").classList.remove("input_button");
+  document.getElementById("button_phone_auth").disabled = true;
+  document.getElementById("button_phone_auth").innerText = "인증 완료";
+  endPhoneAuth();
 }
 
 function rejectPhoneAuth() {
@@ -151,14 +156,19 @@ function rejectPhoneAuth() {
 
 function handlePhoneAuth() {
   const authNumber = document.getElementById("input_phone_auth").value;
-  fetch("/api/phone_auth?auth_number=" + authNumber).then((res) => {
-    if (res.ok) {
-      confirmPhoneAuth();
-      endPhoneAuth();
-    } else {
-      rejectPhoneAuth();
-    }
-  });
+  fetch("/api/phone_auth?auth_number=" + authNumber)
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then((res) => {
+      if (res.result === "ok") {
+        confirmPhoneAuth();
+      } else {
+        rejectPhoneAuth();
+      }
+    });
 }
 document
   .getElementById("button_phone_auth_confirm")

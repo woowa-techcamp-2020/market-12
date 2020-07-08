@@ -20,7 +20,7 @@ router.get("/phone_auth", function (req, res, next) {
     res.status(200);
     res.json({ result: "ok" });
   } else {
-    res.status(401);
+    res.status(200);
     res.json({ result: "error" });
   }
 });
