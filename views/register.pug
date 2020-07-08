@@ -30,29 +30,6 @@ block content
         option(value="naver.com") naver.com
         option(value="gmail.com") gmail.com
     div
-<<<<<<< HEAD
-      div
-        input(id="input_name" type="text", name="name", placeholder="이름*", required)
-      div
-        label(id="input_name_label" for="input_name")
-    div
-      div
-        input(id="input_phone" type="text", name="phone", placeholder="휴대폰*", required)
-        button(type="button", id="button_phone_auth") 인증받기
-      div
-        label(for="input_phone" id="input_phone_label")
-    div(id="phone_auth_input")
-      div
-        div
-          input(id="input_phone_auth_number" type="text", placeholder="인증번호 6자리 입력")
-          span(id="label_phone_auth_remain_time")
-        button(type="button", id="button_phone_auth_confirm") 확인
-      div
-        label(for="phone_auth_label" id="input_password_label")
-    div
-      input(type="checkbox", id="optionalInfoCheck", onclick="optionalInfoCheck(this)")
-      | 선택 정보를 입력하시겠어요? 
-=======
       input.input(id="input_name" type="text", name="name", placeholder="이름*", required)
     div
       label.description_label(id="input_name_label" for="input_name")
@@ -69,7 +46,6 @@ block content
     div
       input(type="checkbox", id="optionalInfoCheck", onclick="activeAddressButton(this)")
       span.guide_label 선택 정보를 입력하시겠어요? 
->>>>>>> develop
       a(href="/register") 내용보기
     div.flex_row
       input.input(type="text", id="postNumber", name="postNumber",placeholder="우편번호", disabled, onclick="onAddressModal()")
