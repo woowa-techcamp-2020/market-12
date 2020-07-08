@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h1= "회원가입페이지"
+  include includes/logo.pug
   input(type="button", value="test",id="testButton", onclick="test()")
 
   form(action='/api/register', id="registerForm", method='POST').centered_layout.flex_stretch
