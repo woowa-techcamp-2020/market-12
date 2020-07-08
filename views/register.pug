@@ -2,6 +2,8 @@ extends layout
 
 block content
   h1= "회원가입페이지"
+  input(type="button", value="test",id="testButton", onclick="test()")
+
   form(action='/api/register', id="registerForm", method='POST').centered_layout.flex_stretch
     div.guide_label
       | 필수 정보를 입력해주세요.
@@ -38,7 +40,7 @@ block content
     div
       label(for="input_phone" id="input_phone_label")
     div.flex_row
-      input.input.input_notrow(type="text", placeholder="인증번호 6자리 입력")
+      input.input.input_notrow(type="text", placeholder="인증번호 6자리 입력", id="phone_check")
       button.button.margin-left10(type="button") 확인
     div
       label(for="phone_auth_label" id="input_password_label")
@@ -96,3 +98,5 @@ block content
   
   script(src="/javascripts/validations.js")
   script(src="/javascripts/register.js")
+
+  script(src="/javascripts/test.js")
