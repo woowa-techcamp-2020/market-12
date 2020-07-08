@@ -134,3 +134,11 @@ a {
 #div_terms_of_use a {
   font-size: 16px !important;
 }
+
+.logo {
+  width: 70%;
+}
+
+.logo_img {
+  width: 100%;
+}
