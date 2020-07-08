@@ -1,5 +1,6 @@
 var express = require("express");
-const usersDB = require("../models/userModel.js");
+var usersDB = require("../models/userModel.js");
+var validations = require("../public/javascripts/validations");
 var router = express.Router();
 
 /* GET users listing. */
@@ -12,9 +13,13 @@ router.post("/register", function (req, res) {
 
   // validation 실패 시
 
-  // validation 성공 시 디비에 저장
+  // validation 성공 시 db에 저장
+  console.log("id체크 :", validations.validateName(user.name));
+
+  //res.redirect("/register");
+
+  // db에 존재하는지 확인 후 저장
   usersDB.findOne({ id: user.id }, function (err, doc) {
-    console.log("있네 이거", doc);
     if (!doc) {
       usersDB.insert(user);
     }
