@@ -4,7 +4,7 @@ var validations = {
    * @returns {boolean}
    */
   validateId: function (id) {
-    return /^[a-z0-9_-]{4,20}$/.test(id);
+    return /^[a-zA-Z0-9_-]{4,20}$/.test(id);
   },
 
   /**
@@ -22,8 +22,7 @@ var validations = {
    */
   validateEmailUsername: function (username) {
     //https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression 참고함
-    return;
-    /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")$/.test(
+    return /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")$/.test(
       username
     );
   },

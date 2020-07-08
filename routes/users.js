@@ -12,9 +12,20 @@ router.post("/register", function (req, res) {
   let user = req.body;
 
   // validation 실패 시
-
+  console.log(user);
+  console.log("id=", validations.validateId(user.id));
+  console.log("name=", validations.validateName(user.name));
+  console.log("password=", validations.validatePassword(user.password));
+  console.log("phone=", validations.validatePhoneNumber(user.phone));
+  console.log(
+    "email_name=",
+    validations.validateEmailUsername(user.email_username)
+  );
+  console.log(
+    "email_pro=",
+    validations.validateEmailPrivider(user.email_provider)
+  );
   // validation 성공 시 db에 저장
-  console.log("id체크 :", validations.validateName(user.name));
 
   //res.redirect("/register");
 
