@@ -39,12 +39,12 @@ block content
     div
       label.description_label(for="input_phone" id="input_phone_label")
     div.flex_row#div_phone_auth
-      div.input.input_notrow
+      div.input.input_notrow#div_input_phone_auth
         input(type="text", placeholder="인증번호 6자리 입력", id="input_phone_auth")
         span#label_phone_auth_remain_time
       button.button.input_button.margin-left10(id="button_phone_auth_confirm", type="button") 확인
     div
-      label.description_label(for="phone_auth_label" id="input_password_label")
+      label.description_label(for="phone_auth_label" id="label_phone_auth")
     div
       input(type="checkbox", id="optionalInfoCheck", onclick="activeAddressButton(this)")
       span.guide_label 선택 정보를 입력하시겠어요? 

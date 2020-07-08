@@ -136,6 +136,12 @@ function endPhoneAuth() {
   clearInterval(phoneAuthIntervalId);
   document.getElementById("label_phone_auth_remain_time").innerText = "";
   document.getElementById("input_phone_auth").value = "";
+  const label = document.getElementById("label_phone_auth");
+  label.classList.remove("alert_label");
+  label.innerText = "";
+  document
+    .getElementById("div_input_phone_auth")
+    .classList.remove("input_alert");
 }
 
 // 핸드폰 인증 버튼 클릭 이벤트 설정
@@ -159,7 +165,10 @@ function confirmPhoneAuth() {
 }
 
 function rejectPhoneAuth() {
-  console.log(2);
+  const label = document.getElementById("label_phone_auth");
+  label.classList.add("alert_label");
+  label.innerText = "인증번호를 확인해 주세요.";
+  document.getElementById("div_input_phone_auth").classList.add("input_alert");
 }
 
 function handlePhoneAuth() {
