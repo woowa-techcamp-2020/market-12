@@ -195,10 +195,59 @@ function checkAdvertisement(checkbox) {
   }
 }
 
-function optionalInfoCheck(checkbox) {
+function activeAddressButton(checkbox) {
   let optional = document.getElementById("optionalInfoCheck");
   let addressButton = document.getElementById("findAddressButton");
+  let postNumber = document.getElementById("postNumber");
+  let address = document.getElementById("address");
+  let detail = document.getElementById("detail");
 
   if (optional.checked) {
+    addressButton.disabled = false;
+    postNumber.disabled = false;
+    address.disabled = false;
+    detail.disabled = false;
+  } else {
+    addressButton.disabled = true;
+    postNumber.disabled = true;
+    address.disabled = true;
+    detail.disabled = true;
   }
+}
+
+function onAddressModal() {
+  document.getElementById("overlay").style.display = "block";
+
+  let addressSearch = document.getElementById("addressSearchInput");
+  addressSearch.addEventListener("keyup", function (event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      searchAddress();
+    }
+  });
+
+  let registerForm = document.getElementById("registerForm");
+  registerForm.onkeypress = function (e) {
+    let key = e.charCode || e.keyCode || 0;
+    if (key === 13) {
+      e.preventDefault();
+    }
+  };
+}
+
+function offAddressModal() {
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("addressSearchInput").value = "";
+}
+
+function stopPropagation(event) {
+  event.stopPropagation();
+}
+
+/**
+ * 주소 검색 api랑 연동하면 될듯
+ */
+function searchAddress() {
+  let address = document.getElementById("addressSearchInput").value;
+  console.log("주소를 검색하고 있는가", address);
 }

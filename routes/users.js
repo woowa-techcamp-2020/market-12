@@ -9,9 +9,8 @@ router.get("/", function (req, res, next) {
 router.post("/register", function (req, res) {
   let user = req.body;
 
-  console.log(user);
-
-  res.send("회원가입완료");
+  console.log("테스트하자", user);
+  res.render("complete_register", { user });
 });
 
 /* GET compelete register page. */
