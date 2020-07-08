@@ -14,6 +14,12 @@ router.get("/login", function (req, res, next) {
   res.render("login", { title: "배민 사장님광장" });
 });
 
+/* GET logout page. */
+router.get("/logout", function (req, res, next) {
+  res.session.clearSession();
+  res.redirect("/");
+});
+
 /* GET register page. */
 router.get("/register", function (req, res, next) {
   res.render("register");
