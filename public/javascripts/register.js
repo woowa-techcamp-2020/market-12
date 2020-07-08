@@ -7,7 +7,15 @@ function applyValidation(inputId, validation, label) {
   const inputDom = document.getElementById(inputId);
   const labelDom = document.getElementById(inputId + "_label");
   inputDom.addEventListener("focusout", (e) => {
-    labelDom.innerText = label(validation(e.target.value));
+    const valid = validation(e.target.value);
+    labelDom.innerText = label(valid);
+    if (valid) {
+      inputDom.classList.remove("input_alert");
+      labelDom.classList.remove("alert_label");
+    } else {
+      inputDom.classList.add("input_alert");
+      labelDom.classList.add("alert_label");
+    }
   });
 }
 
@@ -78,6 +86,111 @@ applyValidation("input_phone", validatePhoneNumber, (valid) =>
   valid ? "" : "유효하지 않은 번호입니다."
 );
 
+document.getElementById("div_phone_auth").style.display = "none";
+function startPhoneAuth() {
+  document.getElementById("input_phone").readOnly = true;
+  document.getElementById("div_phone_auth").style.display = "inherit";
+  const RemainTime = {
+    minuite: 2,
+    second: 0,
+    subtractASecond: function () {
+      this.second--;
+      if (this.second < 0) {
+        if (this.minuite === 0) return null;
+        this.minuite--;
+        this.second = 59;
+      }
+    },
+    toString: function () {
+      return (
+        ("0" + this.minuite).slice(-2) + ":" + ("0" + this.second).slice(-2)
+      );
+    },
+  };
+
+  document.getElementById(
+    "label_phone_auth_remain_time"
+  ).innerText = RemainTime.toString();
+  let intervalId = setInterval(() => {
+    RemainTime.subtractASecond();
+    const remainTime = RemainTime.toString();
+    if (!remainTime) {
+      clearInterval(intervalId);
+      endPhoneAuth();
+      intervalId = null;
+      document.getElementById("label_phone_auth_remain_time").innerText =
+        "유효시간을 초과하였습니다.";
+    } else {
+      document.getElementById(
+        "label_phone_auth_remain_time"
+      ).innerText = remainTime;
+    }
+  }, 1000);
+  const label = document.getElementById("label_phone_auth_remain_time");
+
+  return intervalId;
+}
+
+//TODO
+function endPhoneAuth() {
+  clearInterval(phoneAuthIntervalId);
+  document.getElementById("label_phone_auth_remain_time").innerText = "";
+  document.getElementById("input_phone_auth").value = "";
+  const label = document.getElementById("label_phone_auth");
+  label.classList.remove("alert_label");
+  label.innerText = "";
+  document
+    .getElementById("div_input_phone_auth")
+    .classList.remove("input_alert");
+}
+
+// 핸드폰 인증 버튼 클릭 이벤트 설정
+let phoneAuthIntervalId = null;
+document.getElementById("button_phone_auth").addEventListener("click", (e) => {
+  endPhoneAuth();
+  if (validatePhoneNumber(document.getElementById("input_phone").value)) {
+    phoneAuthIntervalId = startPhoneAuth();
+  } else {
+    document.getElementById("input_phone_label").innerText =
+      "유효하지 않은 번호입니다.";
+  }
+});
+
+function confirmPhoneAuth() {
+  document.getElementById("div_phone_auth").style.display = "none";
+  document.getElementById("button_phone_auth").classList.remove("input_button");
+  document.getElementById("button_phone_auth").disabled = true;
+  document.getElementById("button_phone_auth").innerText = "인증 완료";
+  endPhoneAuth();
+}
+
+function rejectPhoneAuth() {
+  const label = document.getElementById("label_phone_auth");
+  label.classList.add("alert_label");
+  label.innerText = "인증번호를 확인해 주세요.";
+  document.getElementById("div_input_phone_auth").classList.add("input_alert");
+}
+
+function handlePhoneAuth() {
+  const authNumber = document.getElementById("input_phone_auth").value;
+  fetch("/api/phone_auth?auth_number=" + authNumber)
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then((res) => {
+      if (res.result === "ok") {
+        confirmPhoneAuth();
+      } else {
+        rejectPhoneAuth();
+      }
+    });
+}
+document
+  .getElementById("button_phone_auth_confirm")
+  .addEventListener("click", handlePhoneAuth);
+
 /**
  * 전체 약관 동의 체크 함수
  */
@@ -125,11 +238,13 @@ function activeAddressButton(checkbox) {
 
   if (optional.checked) {
     addressButton.disabled = false;
+    addressButton.classList.add("input_button");
     postNumber.disabled = false;
     address.disabled = false;
     detail.disabled = false;
   } else {
     addressButton.disabled = true;
+    addressButton.classList.remove("input_button");
     postNumber.disabled = true;
     address.disabled = true;
     detail.disabled = true;
