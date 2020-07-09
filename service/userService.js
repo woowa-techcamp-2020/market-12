@@ -62,12 +62,12 @@ async function SignUp(user) {
 
 function SignIn(id, password) {
   return new Promise((resolve, reject) => {
-    usersDB.usersDB.findOne({ id }, (err, doc) => {
+    usersDB.usersDB.findOne({ id, password }, (err, doc) => {
       if (err) reject(err);
       if (!doc) resolve(null);
       else {
-        const user = new UserDTO(doc, doc.password);
-        resolve(user);
+        //const user = new UserDTO(doc, doc.password);
+        resolve(doc);
       }
     });
   });
