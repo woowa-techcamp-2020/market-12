@@ -29,23 +29,15 @@ router.get("/phone_auth", function (req, res, next) {
   }
 });
 
+/* GET check whether user with id exists */
+/**
+ * @query {string} id
+ */
+// TODO real check
+router.get("/id_duplication_check", function (req, res, next) {
+  console.log(req.query);
+  if (req.query.id.length > 6) res.json({ result: "ok" });
+  else res.json({ result: "no" });
+});
+
 module.exports = router;
-
-/*
-  // validation 실패 시
-  console.log(user);
-  console.log("id=", validations.validateId(user.id));
-  console.log("name=", validations.validateName(user.name));
-  console.log("password=", validations.validatePassword(user.password));
-  console.log("phone=", validations.validatePhoneNumber(user.phone));
-  console.log(
-    "email_name=",
-    validations.validateEmailUsername(user.email_username)
-  );
-  console.log(
-    "email_pro=",
-    validations.validateEmailPrivider(user.email_provider)
-  );
-  // validation 성공 시 db에 저장
-
-  */
