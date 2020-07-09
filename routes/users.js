@@ -11,6 +11,7 @@ router.get("/", function (req, res, next) {
 router.post("/register", async function (req, res) {
   var user = req.body;
   // 회원가입부분
+  console.log("print user", user);
   var result = await userService.SignUp(user);
 
   user = result.res;
