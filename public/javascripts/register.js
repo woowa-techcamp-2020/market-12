@@ -86,29 +86,27 @@
 
     function check() {
       let valid = true;
-      if (providerInput.value === "")
-        label.innerText = "이메일을 입력해 주세요.";
-      else if (!validateEmailPrivider(providerInput.value)) {
-        providerInput.classList.add("input_alert");
-        valid = false;
-      } else {
+      if (validateEmailPrivider(providerInput.value)) {
         providerInput.classList.remove("input_alert");
+      } else {
+        valid = false;
+        providerInput.classList.add("input_alert");
       }
 
-      if (usernameInput.value === "")
-        label.innerText = "이메일을 입력해 주세요.";
-      else if (!validateEmailUsername(usernameInput.value)) {
-        usernameInput.classList.add("input_alert");
-        valid = false;
-      } else {
+      if (validateEmailUsername(usernameInput.value)) {
         usernameInput.classList.remove("input_alert");
+      } else {
+        valid = false;
+        usernameInput.classList.add("input_alert");
       }
 
       if (valid) {
         label.innerText = "";
         label.classList.remove("alert_label");
       } else {
-        label.innerText = "유효하지 않은 이메일입니다.";
+        if (providerInput.value === "" || usernameInput.value === "")
+          label.innerText = "이메일을 입력해 주세요.";
+        else label.innerText = "유효하지 않은 이메일입니다.";
         label.classList.add("alert_label");
       }
     }
@@ -116,13 +114,13 @@
     providerInput.addEventListener("focusout", check);
     usernameInput.addEventListener("focusout", check);
   }
-
   applyEmailValidation();
 
   const select = document.getElementById("select_email_provider");
   select.addEventListener("change", (e) => {
     const provider = e.target.value;
     const providerInput = document.getElementById("input_email_provider");
+    providerInput.classList.remove("input_alert");
     if (provider === "") {
       providerInput.readOnly = false;
     } else {
@@ -142,33 +140,32 @@
 
 // Applying phone authentication
 (function () {
+  const phoneNumberInput = document.getElementById("input_phone");
+  const phoneNumberButton = document.getElementById("button_phone_auth");
+  const phoneAuthDiv = document.getElementById("div_phone_auth");
+  const phoneAuthNumberDiv = document.getElementById("div_input_phone_auth");
+  const phoneAuthNumberInput = document.getElementById("input_phone_auth");
+  const phoneAuthRemainingLabel = document.getElementById(
+    "label_phone_auth_remain_time"
+  );
+  const phoneLabel = document.getElementById("label_phone_auth");
   let stopPhoneAuth = null;
   function startPhoneAuth() {
     if (stopPhoneAuth) stopPhoneAuth();
-    document.getElementById("input_phone").readOnly = true;
-    document.getElementById("div_phone_auth").style.display = "inherit";
+    phoneNumberInput.readOnly = true;
+    phoneAuthDiv.style.display = "inherit";
 
-    const timer = function (min, second, beforeEachCallback, finishCallback) {
-      if (min === 0 && second === 0) {
+    const timer = function (second, beforeEachCallback, finishCallback) {
+      if (second === 0) {
         finishCallback();
         return () => {};
       }
-      beforeEachCallback(min, second);
+      beforeEachCallback(second);
 
       let nextSecond = second - 1;
-      let nextMin = min;
-      if (nextSecond < 0) {
-        nextSecond = 59;
-        nextMin--;
-      }
 
       const timerId = setTimeout(() => {
-        stopPhoneAuth = timer(
-          nextMin,
-          nextSecond,
-          beforeEachCallback,
-          finishCallback
-        );
+        stopPhoneAuth = timer(nextSecond, beforeEachCallback, finishCallback);
       }, 1000);
       const interupt = () => {
         clearTimeout(timerId);
@@ -177,19 +174,16 @@
     };
 
     stopPhoneAuth = timer(
-      0,
       10,
-      (min, second) => {
-        const remainTimeString =
-          ("0" + min).slice(-2) + ":" + ("0" + second).slice(-2);
-
-        document.getElementById(
-          "label_phone_auth_remain_time"
-        ).innerText = remainTimeString;
+      (second) => {
+        const remainTimeString = [~~(second / 60), second % 60]
+          .map((x) => (x >= 10 ? x : "0" + x))
+          .join(":");
+        phoneAuthRemainingLabel.innerText = remainTimeString;
       },
       () => {
         endPhoneAuth();
-        document.getElementById("div_phone_auth").style.display = "none";
+        phoneAuthDiv.style.display = "none";
         rejectPhoneAuth("입력시간을 초과했습니다.");
       }
     );
@@ -199,50 +193,43 @@
    * reset phone auth number elements. not set display none
    */
   function endPhoneAuth() {
-    document.getElementById("label_phone_auth_remain_time").innerText = "";
-    document.getElementById("input_phone_auth").value = "";
-    const label = document.getElementById("label_phone_auth");
-    label.classList.remove("alert_label");
-    label.innerText = "";
-    document
-      .getElementById("div_input_phone_auth")
-      .classList.remove("input_alert");
+    phoneAuthRemainingLabel.innerText = "";
+    phoneAuthNumberInput.value = "";
+    phoneLabel.classList.remove("alert_label");
+    phoneLabel.innerText = "";
+    phoneAuthNumberDiv.classList.remove("input_alert");
   }
 
   function confirmPhoneAuth() {
     endPhoneAuth();
-    document.getElementById("div_phone_auth").style.display = "none";
-    document
-      .getElementById("button_phone_auth")
-      .classList.remove("input_button");
-    document.getElementById("button_phone_auth").disabled = true;
-    document.getElementById("button_phone_auth").innerText = "인증 완료";
+    phoneAuthDiv.style.display = "none";
+    phoneNumberButton.classList.remove("input_button");
+    phoneNumberButton.disabled = true;
+    phoneNumberButton.innerText = "인증 완료";
   }
 
-  function rejectPhoneAuth(label) {
-    const labelDom = document.getElementById("label_phone_auth");
-    labelDom.classList.add("alert_label");
-    labelDom.innerText = label;
-    document
-      .getElementById("div_input_phone_auth")
-      .classList.add("input_alert");
+  function rejectPhoneAuth(reason) {
+    phoneLabel.classList.add("alert_label");
+    phoneLabel.innerText = reason;
+    phoneAuthNumberDiv.classList.add("input_alert");
   }
 
-  document
-    .getElementById("button_phone_auth")
-    .addEventListener("click", (e) => {
-      endPhoneAuth();
-      if (validatePhoneNumber(document.getElementById("input_phone").value)) {
-        startPhoneAuth();
-      } else {
-        document.getElementById("input_phone_label").innerText =
-          "유효하지 않은 번호입니다.";
-      }
-    });
+  phoneNumberButton.addEventListener("click", (e) => {
+    endPhoneAuth();
+    // const phoneLabel = document.getElementById("input_phone_label");
+    if (validatePhoneNumber(phoneNumberInput.value)) {
+      startPhoneAuth();
+    } else {
+      phoneNumberInput.classList.add("input_alert");
+      phoneLabel.classList.add("alert_label");
+      phoneLabel.innerText = "유효하지 않은 번호입니다.";
+    }
+  });
+
   document
     .getElementById("button_phone_auth_confirm")
     .addEventListener("click", () => {
-      const authNumber = document.getElementById("input_phone_auth").value;
+      const authNumber = phoneAuthNumberInput.value;
       fetch("/api/phone_auth?auth_number=" + authNumber)
         .then((res) => {
           if (res.ok) {
