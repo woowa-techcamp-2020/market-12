@@ -1,107 +1,127 @@
 extends layout
 
 block content
-  include includes/logo.pug
-  input(type="button", value="test",id="testButton", onclick="test()")
+  #wrapper.simple_border.padding2
+    include includes/logo.pug
+    input(type="button", value="test",id="testButton", onclick="test()")
 
-  form(action='/api/register', id="registerForm", method='POST').centered_layout.flex_stretch
-    div.guide_label 필수 정보를 입력해주세요.
+    form(action='/api/register', id="registerForm", method='POST').centered_layout.flex_stretch
+      div.guide_label 필수 정보를 입력해주세요.
 
-    div
-      input.input(id="input_id", type="text", name="id", placeholder="아이디*(4~20자)",required)
-    div
-      label.description_label(for="input_id", id="input_id_label")
+      div
+        input.input(id="input_id", type="text", name="id", placeholder="아이디*(4~20자)",required)
+      div.margin0
+        label.description_label(for="input_id", id="input_id_label")
 
-    div
-      input.input(id="input_password", type="password", name="password", placeholder="비밀번호*(영문+숫자, 8~20자)", required)
-    div
-      label.description_label(for="input_password", id="input_password_label")
+      div
+        input.input(id="input_password", type="password", name="password", placeholder="비밀번호*(영문+숫자, 8~20자)", required)
+      div.margin0
+        label.description_label(for="input_password", id="input_password_label")
 
-    div
-      input.input(id="input_password_check", type="password", name="password_check", placeholder="비밀번호 재확인*", required)
-    div
-      label.description_label(for="input_password_check" id="input_password_check_label")
-    div.flex_row
-      input.input(id="input_email_username" type="text", name="email_username", placeholder="이메일 앞자리*", required)
-      div.centered_layout @
-      input.input(id="input_email_provider" type="text", name="email_provider", placeholder="이메일 뒺자리*", required)
-    div
-      label.description_label(for="input_email_username" id="input_email_label")
-    div
-      select.input(id="select_email_provider")
-        option(value="") 직접 입력
-        option(value="naver.com") naver.com
-        option(value="gmail.com") gmail.com
-    div
-      input.input(id="input_name" type="text", name="name", placeholder="이름*", required)
-    div
-      label.description_label(id="input_name_label" for="input_name")
-    div.flex_row
-      input.input.input_notrow(id="input_phone" type="text", name="phone", placeholder="휴대폰*", required)
-      button.button.input_button.margin-left10(id="button_phone_auth", type="button") 인증받기
-    div
-      label.description_label(for="input_phone" id="input_phone_label")
-    div.flex_row#div_phone_auth
-      div.input.input_notrow#div_input_phone_auth
-        input(type="text", placeholder="인증번호 6자리 입력", id="input_phone_auth")
-        span#label_phone_auth_remain_time
-      button.button.input_button.margin-left10(id="button_phone_auth_confirm", type="button") 확인
-    div
-      label.description_label(for="phone_auth_label" id="label_phone_auth")
-    div
-      input(type="checkbox", id="optionalInfoCheck", onclick="activeAddressButton(this)")
-      span.guide_label 선택 정보를 입력하시겠어요? 
-      a(href="/register") 내용보기
-    div.flex_row
-      input.input(type="text", id="postNumber", name="postNumber",placeholder="우편번호", disabled, onclick="onAddressModal()")
-      input.button.margin-left10(type="button", id="findAddressButton", value="주소찾기", disabled, onclick="onAddressModal()")
-    div
-      input.input(type="text", id="address", name="address", placeholder="주소",disabled, onclick="onAddressModal()")
-    div
-      input.input(type="text", id="detail", name="detail", placeholder="상세 주소",disabled, onclick="onAddressModal()")
-    div(id="overlay", onclick="offAddressModal()")
-      div(id="overlay-wrapper", onclick="stopPropagation(event)")
-        div(id="overlay-wrapper-header")
-          h1 주소검색
-          input(type="button", value="X", onclick="offAddressModal()")
-        div(id="overlay-wrapper-contents")
-          div(id="overlay-wrapper-contents-search") 
-            input(type="text", id="addressSearchInput", placeholder="예) 판교역로 235, 분당 주공, 삼평동 681")
-          div(id="overlay-wrapper-contents-search")
-            h3 tip
-            p 아래와 같은 조합으로 검색하시면 더욱 정확한 결과가 검색됩니다.
-            p 도로면 + 건물번호
-            p 예) 판교역로 235, 제주 첨단로 242
-            p 지역명(동/리) + 번지
-            p 예) 삼평동 681, 제주 영평동 2181
-            p 지역명(동/리) + 건물명(아파트명)
-            p 예) 분당 주공, 연수동 주공3차
-            p 사서함명 + 번호
-            p 예) 분당우체국사서함 1~100
-        div(id="overlay-wrapper-footer")
+      div
+        input.input(id="input_password_check", type="password", name="password_check", placeholder="비밀번호 재확인*", required)
+      div.margin0
+        label.description_label(for="input_password_check" id="input_password_check_label")
 
-    div
-      input(type="checkbox", id="allowAll", onclick="allowAllCheck(this)")
-      span.guide_label.bold_label 전체 약관에 동의합니다 
-    div  
-      input(type="checkbox", id="agreeEssential", name="agreeEssential", onclick="checkEssential(this)")
-      span.guide_label 필수 항목에 동의합니다
-    div#div_terms_of_use
-      a.description_label(href="/register") 배민사장님광장 이용약관
-      | 
-      a.description_label(href="/register") 개인정보 수집이용 동의
-    div
-      input(type="checkbox", id="agreeAdvertisement", name="agreeAdvertisement", onclick="checkAdvertisement(this)")
-      span.guide_label 광고성 정보 수신 동의 (선택) 
-    ul
-      li.description_label
-        span 만 14세 이상 회원만 가입 가능합니다.
-        | 
+      div.flex_row
+        input.input(id="input_email_username" type="text", name="email_username", placeholder="이메일 앞자리*", required)
+        div.centered_layout @
+        input.input(id="input_email_provider" type="text", name="email_provider", placeholder="이메일 뒺자리*", required)
+      div.margin0
+        label.description_label(for="input_email_username" id="input_email_label")
+
+      div
+        select.input(id="select_email_provider")
+          option(value="") 직접 입력
+          option(value="naver.com") naver.com
+          option(value="gmail.com") gmail.com
+
+      div
+        input.input(id="input_name" type="text", name="name", placeholder="이름*", required)
+      div.margin0
+        label.description_label(id="input_name_label" for="input_name")
+
+      div.flex_row
+        input.input.input_notrow(id="input_phone" type="text", name="phone", placeholder="휴대폰*", required)
+        button.button.input_button.margin-left10(id="button_phone_auth", type="button") 인증받기
+      div.marin0
+        label.description_label(for="input_phone" id="input_phone_label")
+      div.flex_row#div_phone_auth
+        div.input.input_notrow#div_input_phone_auth
+          input(type="text", placeholder="인증번호 6자리 입력", id="input_phone_auth")
+          span#label_phone_auth_remain_time
+        button.button.input_button.margin-left10(id="button_phone_auth_confirm", type="button") 확인
+      div.margin0
+        label.description_label(for="phone_auth_label" id="label_phone_auth")
+      .margin0
+        ul
+          li.description_label 인증번호 전송은 통신사에 따라 최대 1분까지 소요될 수 있습니다.
+          li.description_label 인증번호가 도착하지 않은 경우 "인증번호 재전송"을 눌러주세요.
+
+      .margin2
+
+      div
+        input(type="checkbox", id="optionalInfoCheck", onclick="activeAddressButton(this)")
+        span.guide_label 선택 정보를 입력하시겠어요? 
         a(href="/register") 내용보기
 
-    input.button.submit_button(type='submit', value='가입완료') 
-  
-  script(src="/javascripts/validations.js")
-  script(src="/javascripts/register.js")
+      div.flex_row
+        input.input(type="text", id="postNumber", name="postNumber",placeholder="우편번호", disabled, onclick="onAddressModal()")
+        input.button.margin-left10(type="button", id="findAddressButton", value="주소찾기", disabled, onclick="onAddressModal()")
+      div
+        input.input(type="text", id="address", name="address", placeholder="주소",disabled, onclick="onAddressModal()")
+      div
+        input.input(type="text", id="detail", name="detail", placeholder="상세 주소",disabled, onclick="onAddressModal()")
 
-  script(src="/javascripts/test.js")
+      div(id="overlay", onclick="offAddressModal()")
+        div(id="overlay-wrapper", onclick="stopPropagation(event)")
+          div(id="overlay_wrapper_header")
+            h2.padding1.margin0 주소검색
+            button.reset(type="button", onclick="offAddressModal()") X
+          div(id="overlay-wrapper-contents")
+            div(id="overlay-wrapper-contents-search") 
+              input.padding1(type="text", id="addressSearchInput", placeholder="예) 판교역로 235, 분당 주공, 삼평동 681")
+              button.reset(type="button") 🔍
+            div.padding2(id="overlay-wrapper-contents-search-result")
+              h3 tip
+              p 아래와 같은 조합으로 검색하시면 더욱 정확한 결과가 검색됩니다.
+              p 도로면 + 건물번호
+              p 예) 판교역로 235, 제주 첨단로 242
+              p 지역명(동/리) + 번지
+              p 예) 삼평동 681, 제주 영평동 2181
+              p 지역명(동/리) + 건물명(아파트명)
+              p 예) 분당 주공, 연수동 주공3차
+              p 사서함명 + 번호
+              p 예) 분당우체국사서함 1~100
+          footer#overlay_wrapper_footer
+
+      .margin2
+
+      div
+        input(type="checkbox", id="allowAll", onclick="allowAllCheck(this)")
+        span.guide_label.bold_label 전체 약관에 동의합니다 
+      div  
+        input(type="checkbox", id="agreeEssential", name="agreeEssential", onclick="checkEssential(this)")
+        span.guide_label 필수 항목에 동의합니다
+      div#div_terms_of_use
+        a.description_label(href="/register") 배민사장님광장 이용약관
+        | 
+        a.description_label(href="/register") 개인정보 수집이용 동의
+      div
+        input(type="checkbox", id="agreeAdvertisement", name="agreeAdvertisement", onclick="checkAdvertisement(this)")
+        span.guide_label 광고성 정보 수신 동의 (선택) 
+      ul
+        li.description_label
+          span 만 14세 이상 회원만 가입 가능합니다.
+          | 
+          a(href="/register") 내용보기
+
+      input.button.submit_button(type='submit', value='가입완료') 
+    
+    script(src="/javascripts/validations.js")
+    script(src="/javascripts/register.js")
+
+    script(src="/javascripts/test.js")
+
+block head
+  link(rel="stylesheet", href="/stylesheets/register.css")

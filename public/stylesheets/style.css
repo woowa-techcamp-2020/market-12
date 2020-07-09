@@ -1,3 +1,7 @@
+:root {
+  --color-blue: blue;
+}
+
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -9,6 +13,11 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.reset {
+  background: none;
+  border: none;
 }
 
 .flex_jspace_between {
@@ -77,8 +86,16 @@ a {
   width: 100%;
 }
 
+.margin0 {
+  margin: 0 !important;
+}
+
 .margin1 {
-  margin: 1rem;
+  margin: 1rem !important;
+}
+
+.margin2 {
+  margin: 2rem !important;
 }
 
 .padding1 {
@@ -130,47 +147,6 @@ a {
 .header_label {
   font-size: 25px;
   margin-bottom: 1rem;
-}
-
-#overlay {
-  position: fixed; /* Sit on top of the page content */
-  display: none; /* Hidden by default */
-  width: 100%; /* Full width (cover the whole page) */
-  height: 100%; /* Full height (cover the whole page) */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
-  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-  cursor: pointer; /* Add a pointer on hover */
-}
-
-#overlay-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  background-color: white;
-}
-
-#overlay-wrapper-header {
-  background-color: skyblue;
-}
-
-#registerForm > div {
-  margin-bottom: 10px;
-}
-
-#div_terms_of_use {
-  margin-left: 20px;
-}
-#div_terms_of_use a {
-  font-size: 16px !important;
-}
-#div_phone_auth input {
-  border: none;
 }
 
 .logo {
@@ -235,4 +211,8 @@ a {
   content: "|";
   margin: 5px;
   color: gray;
+}
+
+#wrapper {
+  width: 450px;
 }
