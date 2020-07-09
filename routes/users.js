@@ -34,10 +34,11 @@ router.get("/phone_auth", function (req, res, next) {
  * @query {string} id
  */
 // TODO real check
-router.get("/id_duplication_check", function (req, res, next) {
-  console.log(req.query);
-  if (req.query.id.length > 6) res.json({ result: "ok" });
-  else res.json({ result: "no" });
+router.get("/id_duplication_check", async function (req, res, next) {
+  var userId = req.query.id;
+  var isExist = await userService.isExist(userId);
+  if (isExist) res.json({ result: "no" });
+  else res.json({ result: "ok" });
 });
 
 module.exports = router;

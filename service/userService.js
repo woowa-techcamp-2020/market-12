@@ -1,5 +1,15 @@
 var usersDB = require("../models/userModel");
 //var usersDB = require("../models/userModel.js");
+async function isExist(userId) {
+  var res = await new Promise((resolve, reject) => {
+    usersDB.usersDB.findOne({ id: userId }, (err, docs) => {
+      if (err) reject(err);
+      resolve(docs);
+    });
+  });
+  if (res) return true;
+  else return false;
+}
 
 async function SignUp(user) {
   var res;
@@ -33,4 +43,4 @@ function SignIn(id, password) {
   return { userRecord };
 }
 
-module.exports = { SignUp, SignIn };
+module.exports = { SignUp, SignIn, isExist };
