@@ -491,6 +491,36 @@ function stopPropagation(event) {
   event.stopPropagation();
 }
 
+function numberCheck() {
+  var num = document.getElementById("input_phone").value;
+
+  num = num.replace(/-/g, "");
+  if (num.length == 2) {
+    if (num != "01") num = "01";
+  }
+
+  if (num.length > 3 && num.charAt(2) == "0" && num.length <= 7) {
+    num = num.substr(0, 3) + "-" + num.substr(3);
+  } else if (num.length > 7 && num.charAt(2) == "0") {
+    num = num.substr(0, 3) + "-" + num.substr(3, 4) + "-" + num.substr(7);
+  }
+
+  if (num.length > 3 && num.charAt(2) != "0" && num.length <= 6) {
+    num = num.substr(0, 3) + "-" + num.substr(3);
+  } else if (num.length > 6 && num.charAt(2) != "0") {
+    num = num.substr(0, 3) + "-" + num.substr(3, 3) + "-" + num.substr(6);
+  }
+
+  document.getElementById("input_phone").value = num;
+
+  if (num.length > 12) {
+    if (num.charAt(2) == 0) {
+      document.getElementById("input_phone").value = num.substr(0, 13);
+    } else {
+      document.getElementById("input_phone").value = num.substr(0, 12);
+    }
+  }
+}
 /**
  * 주소 검색 api랑 연동하면 될듯
  */
