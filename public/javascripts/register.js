@@ -311,7 +311,7 @@ function onAddressModal() {
     }
   });
 
-  let registerForm = document.getElementById("registerForm");
+  let registerForm = document.getElementById("register_form");
   registerForm.onkeypress = function (e) {
     let key = e.charCode || e.keyCode || 0;
     if (key === 13) {
