@@ -24,16 +24,26 @@ router.post("/register", async function (req, res) {
   console.log("print user", user);
   //validation check
   var checkList = userService.validationCheck(user);
-  console.log("checkList", Object.keys(checkList).length);
-  if (Object.keys(checkList).length > 0) {
+
+  console.log("checkList", checkList, checkList.length);
+
+  if (checkList.length > 0) {
     res.status(200);
-    res.json({ checkList });
+    res.json({ result: "checkFail", checkList });
+    return;
   }
+
   // 회원가입부분
   var result = await userService.SignUp(user);
+  if (result.result == "exist") {
+    res.json({ result: "alreadyExist" });
+    return;
+  }
 
-  user = result.res;
-  res.render("complete_register", { user });
+  // 유저 정보 세션 저장
+  user = result.tempUser;
+  res.session.setSession({ user });
+  res.json({ result: "ok" });
 });
 
 /* GET compelete register page. */

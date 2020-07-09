@@ -27,14 +27,12 @@ router.get("/register", function (req, res, next) {
 
 /* GET compelete register page. */
 router.get("/complete_register", function (req, res, next) {
-  res.render("complete_register", {
-    user: {
-      name: "name",
-      id: "id",
-      email: "email",
-      phone: "010",
-    },
-  });
+  var user = req.session.user;
+  if (user) {
+    res.render("complete_register", {
+      user,
+    });
+  }
 });
 
 module.exports = router;
