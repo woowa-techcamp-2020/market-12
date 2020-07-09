@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  div.flex_column.simple_border#main_page
+  div.flex_column.simple_border#main_page.padding2
     if !user
       div.header_label 사장님, 로그인해주세요!
       a.button.submit_button.text_center(href="/login") 배민사장님광장 로그인
