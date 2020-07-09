@@ -1,5 +1,5 @@
 var express = require("express");
-var userService = require("../lib/userService.js");
+var userService = require("../service/userService.js");
 var validations = require("../public/javascripts/validations");
 var router = express.Router();
 
@@ -11,10 +11,8 @@ router.get("/", function (req, res, next) {
 router.post("/register", function (req, res) {
   let user = req.body;
 
-  console.log("이건되니?", user);
   // TODO: 여기 작업 다시 하자
-  res = userService.SignUp(user);
-  console.log("userService 통과함", res);
+  //res = userService.SignUp(user);
 
   /*
   // validation 실패 시
@@ -40,8 +38,9 @@ router.post("/register", function (req, res) {
     }
   });
 
-  res.render("complete_register", { user });
+  
   */
+  res.render("complete_register", { user });
 });
 
 /* GET compelete register page. */
