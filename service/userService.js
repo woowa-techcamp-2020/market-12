@@ -9,14 +9,13 @@ function validationCheck(user) {
   var checkEmailProvider = validations.validateId(user.email_provider);
   var checkPhone = validations.validateId(user.phone);
 
-  var checkList = {};
-  if (!checkId) checkList.id = checkId;
-  if (!checkName) checkList.name = checkName;
-  if (!checkPassword) checkList.password = checkPassword;
-  if (!checkEmailName) checkList.email_username = checkEmailName;
-  if (!checkEmailProvider) checkList.email_provider = checkEmailProvider;
-  if (!checkPhone) checkList.phone = checkPhone;
-
+  var checkList = [];
+  if (!checkId) checkList.push("id");
+  if (!checkName) checkList.push("name");
+  if (!checkPassword) checkList.push("password");
+  if (!checkEmailName) checkList.push("email_username");
+  if (!checkEmailProvider) checkList.push("email_provider");
+  if (!checkPhone) checkList.push("phone");
   return checkList;
 }
 
