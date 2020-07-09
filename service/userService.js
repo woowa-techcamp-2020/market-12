@@ -1,44 +1,36 @@
 var usersDB = require("../models/userModel");
 //var usersDB = require("../models/userModel.js");
 
-function SignUp(user) {
-  try {
-    let res = usersDB.findOne(user.id);
-    console.log("SignUp", res);
-    if (!res) {
-      usersDB.insert(user);
-      res = usersDB.findOne(user.id);
-    }
-    return { res };
-  } catch (e) {
-    console.log(e);
-    throw e;
+async function SignUp(user) {
+  var res;
+  //검색
+  res = await new Promise((resolve, reject) => {
+    usersDB.usersDB.findOne({ id: user.id }, (err, docs) => {
+      if (err) reject(err);
+      resolve(docs);
+    });
+  });
+
+  //있으면
+  if (res) {
+    res = "이미 존재하는 유저입니다";
   }
+  //없으면
+  else {
+    usersDB.usersDB.insert(user);
+    res = await new Promise((resolve, reject) => {
+      usersDB.usersDB.findOne({ id: user.id }, (err, docs) => {
+        if (err) reject(err);
+        resolve(docs);
+      });
+    });
+  }
+  return { res };
 }
 
 function SignIn(id, password) {
-  const userRecord = usersDB.findOne({ id });
-  if (!userRecord) {
-    throw new Error("User not registered");
-  }
-
-  console.log(password);
+  const userRecord = "";
   return { userRecord };
-  /**  password check
-    const validPassword = await argon2.verify(userRecord.password, password);
-    if (validPassword) {
-      this.logger.silly('Password is valid!');
-      this.logger.silly('Generating JWT');
-      const token = this.generateToken(userRecord);
-
-      const user = userRecord.toObject();
-      Reflect.deleteProperty(user, 'password');
-      Reflect.deleteProperty(user, 'salt');
-      return { user, token };
-    } else {
-      throw new Error('Invalid Password');
-    }
-    */
 }
 
 module.exports = { SignUp, SignIn };
