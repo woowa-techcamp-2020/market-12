@@ -49,12 +49,3 @@ function validateName(name) {
 function validatePhoneNumber(phoneNumber) {
   return /^01[01679]\d{7,8}$/.test(phoneNumber);
 }
-
-module.exports = {
-  validateId,
-  validateName,
-  validatePassword,
-  validateEmailUsername,
-  validateEmailPrivider,
-  validatePhoneNumber,
-};
