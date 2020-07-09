@@ -13,13 +13,14 @@ function validateId(id) {
 function validatePassword(password) {
   return /^[a-z0-9]{8,20}$/.test(password);
 }
+
 /**
  * @param  {string} username
  * @returns {boolean}
  */
 function validateEmailUsername(username) {
-  // https://en.wikipedia.org/wiki/Email_address
-  return /^(?:[a-zA-Z0-9!#$%&'*+\-\/=?^_`{|}~]+)(?:\.[a-zA-Z0-9!#$%&'*+\-\/=?^_`{|}~]+)*$/.test(
+  //https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression 참고함
+  return /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")$/.test(
     username
   );
 }
@@ -29,8 +30,9 @@ function validateEmailUsername(username) {
  * @returns {boolean}
  */
 function validateEmailPrivider(provider) {
-  // top level domain은 그냥 영문자만 가능하도록.
-  return /^(?:[a-zA-Z0-9][a-zA-Z0-9\-]*\.)+(?:[a-zA-Z]+)$/.test(provider);
+  return /^(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/.test(
+    provider
+  );
 }
 
 /**
@@ -47,3 +49,12 @@ function validateName(name) {
 function validatePhoneNumber(phoneNumber) {
   return /^01[01679]\d{7,8}$/.test(phoneNumber);
 }
+
+module.exports = {
+  validateId,
+  validateName,
+  validatePassword,
+  validateEmailUsername,
+  validateEmailPrivider,
+  validatePhoneNumber,
+};
