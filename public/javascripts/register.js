@@ -103,7 +103,6 @@ applyValidation("input_phone", validatePhoneNumber, (valid) =>
   valid ? "" : "유효하지 않은 번호입니다."
 );
 
-document.getElementById("div_phone_auth").style.display = "none";
 function startPhoneAuth() {
   document.getElementById("input_phone").readOnly = true;
   document.getElementById("div_phone_auth").style.display = "inherit";

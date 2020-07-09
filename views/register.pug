@@ -41,7 +41,7 @@ block content
       button.button.input_button.margin-left10(id="button_phone_auth", type="button") 인증받기
     div
       label.description_label(for="input_phone" id="input_phone_label")
-    div.flex_row#div_phone_auth
+    div.flex_row#div_phone_auth(style="display:none;")
       div.input.input_notrow#div_input_phone_auth
         input(type="text", placeholder="인증번호 6자리 입력", id="input_phone_auth")
         span#label_phone_auth_remain_time
