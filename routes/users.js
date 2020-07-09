@@ -34,10 +34,9 @@ router.get("/phone_auth", function (req, res, next) {
  * @query {string} id
  */
 // TODO real check
-router.get("/id_duplication_check", function (req, res, next) {
-  console.log(req.query);
-  if (req.query.id.length > 6) res.json({ result: "ok" });
-  else res.json({ result: "no" });
+router.get("/id_duplication_check", async function (req, res, next) {
+  const user = await userService.CheckDuplicate(req.query.id);
+  res.json({ result: user.length === 0 ? "ok" : "no" });
 });
 
 module.exports = router;

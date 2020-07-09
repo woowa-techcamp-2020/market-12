@@ -33,4 +33,13 @@ function SignIn(id, password) {
   return { userRecord };
 }
 
-module.exports = { SignUp, SignIn };
+function CheckDuplicate(id) {
+  return new Promise((resolve, reject) => {
+    usersDB.usersDB.find({ id }, (err, docs) => {
+      if (err) reject(err);
+      else resolve(docs);
+    });
+  });
+}
+
+module.exports = { SignUp, SignIn, CheckDuplicate };
