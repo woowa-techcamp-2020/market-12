@@ -1,6 +1,6 @@
 var express = require("express");
 var userService = require("../service/userService.js");
-var validations = require("../public/javascripts/validations");
+const { SignIn } = require("../service/userService.js");
 var router = express.Router();
 
 /* GET users listing. */
@@ -8,10 +8,24 @@ router.get("/", function (req, res, next) {
   res.send("respond with a resource");
 });
 
+router.post("/login", async function (req, res) {
+  const { id, password } = req.body;
+  const user = await SignIn(id, password);
+  if (user) {
+    res.session.setSession({ user });
+    res.json({ result: "ok" });
+  } else {
+    res.json({ result: "no" });
+  }
+});
+
 router.post("/register", async function (req, res) {
   var user = req.body;
-  // 회원가입부분
   console.log("print user", user);
+  //validation check
+  var checkList = userService.validationCheck(user);
+  console.log("checkList", checkList);
+  // 회원가입부분
   var result = await userService.SignUp(user);
 
   user = result.res;

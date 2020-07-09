@@ -3,18 +3,22 @@ extends layout
 block content
   div.simple_border.padding2.flex_stretch.flex_column#login_box
     include includes/logo.pug
-    form(action='/api/login', method='POST').centered_layout.flex_stretch
+    form.centered_layout.flex_stretch#login_form
       div.margin1
-        input.input(type='text', name='아이디', value='', placeholder="아이디를 입력해주세요")
+        input.input(type='text', name='id', value='', placeholder="아이디를 입력해주세요")
       div.margin1
-        input.input(type='password', name='패스워드', value='',placeholder="비밀번호를 입력해주세요")
+        input.input(type='password', name='password', value='',placeholder="비밀번호를 입력해주세요")
+      div.guide_label#error_label(style="color: red;")
       div.flex_row.flex_jspace_between
         div
-          input(type='checkbox', name='아이디저장', value='') 
+          input(type='checkbox', value='') 
           span.guide_label 아이디저장 
         ul.row_links_list
           li
             a(href="/login") 아이디/비밀번호 찾기
           li
             a(href="/register") 회원가입
-      input.submit_button.button(type='submit', value='로그인')
+      button.submit_button.button 로그인
+
+block head
+  script(src="/javascripts/login.js")

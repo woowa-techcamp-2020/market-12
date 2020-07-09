@@ -12,7 +12,7 @@ module.exports = function sessionMiddleware() {
       },
       clearSession: () => {
         if (req.cookies._sid) {
-          res.cookie.clearCookie("_sid");
+          res.clearCookie("_sid");
           req.session.data = null;
           delete sessions[req.cookies._sid];
         }

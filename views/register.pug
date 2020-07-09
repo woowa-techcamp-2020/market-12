@@ -44,9 +44,10 @@ block content
       div.flex_row
         input.input.input_notrow#input_phone( type="text", name="phone", placeholder="휴대폰*", required)
         button.button.input_button.margin-left10#button_phone_auth(, type="button") 인증받기
-      div.marin0
+      div.margin0
         label.description_label#input_phone_label(for="input_phone")
-      div.flex_row#div_phone_auth
+
+      div.flex_row#div_phone_auth(style="display:none;")
         div.input.input_notrow#div_input_phone_auth
           input#input_phone_auth(type="text", placeholder="인증번호 6자리 입력")
           span#label_phone_auth_remain_time

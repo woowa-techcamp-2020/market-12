@@ -9,12 +9,15 @@ function validationCheck(user) {
   var checkEmailProvider = validations.validateId(user.email_provider);
   var checkPhone = validations.validateId(user.phone);
 
-  console.log("id", checkId);
-  console.log("pw", checkPassword);
-  console.log("name", checkName);
-  console.log("e_name", checkEmailName);
-  console.log("e_pro", checkEmailProvider);
-  console.log("phone", checkPhone);
+  var checkList = {};
+  if (!checkId) checkList.id = checkId;
+  if (!checkName) checkList.name = checkName;
+  if (!checkPassword) checkList.password = checkPassword;
+  if (!checkEmailName) checkList.email_username = checkEmailName;
+  if (!checkEmailProvider) checkList.email_provider = checkEmailProvider;
+  if (!checkPhone) checkList.phone = checkPhone;
+
+  return checkList;
 }
 
 async function isExist(userId) {
@@ -31,7 +34,7 @@ async function isExist(userId) {
 async function SignUp(user) {
   var res;
   //validation check
-  validationCheck(user);
+  var checkList = validationCheck(user);
 
   //검색
   res = await new Promise((resolve, reject) => {
@@ -59,8 +62,16 @@ async function SignUp(user) {
 }
 
 function SignIn(id, password) {
-  const userRecord = "";
-  return { userRecord };
+  return new Promise((resolve, reject) => {
+    usersDB.usersDB.findOne({ id }, (err, doc) => {
+      if (err) reject(err);
+      if (!doc) resolve(null);
+      else {
+        const user = new UserDTO(doc, doc.password);
+        resolve(user);
+      }
+    });
+  });
 }
 
-module.exports = { SignUp, SignIn, isExist };
+module.exports = { SignUp, SignIn, isExist, validationCheck };
