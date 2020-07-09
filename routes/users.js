@@ -25,8 +25,6 @@ router.post("/register", async function (req, res) {
   //validation check
   var checkList = userService.validationCheck(user);
 
-  console.log("checkList", checkList, checkList.length);
-
   if (checkList.length > 0) {
     res.status(200);
     res.json({ result: "checkFail", checkList });

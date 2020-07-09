@@ -12,12 +12,12 @@ function validationCheck(user) {
   var checkPhone = validations.validatePhoneNumber(user.phone);
 
   var checkList = [];
-  if (!checkId) checkList.push("id");
+  if (!checkPhone) checkList.push("phone");
   if (!checkName) checkList.push("name");
-  if (!checkPassword) checkList.push("password");
   if (!checkEmailName) checkList.push("email_username");
   if (!checkEmailProvider) checkList.push("email_provider");
-  if (!checkPhone) checkList.push("phone");
+  if (!checkPassword) checkList.push("password");
+  if (!checkId) checkList.push("id");
   return checkList;
 }
 
