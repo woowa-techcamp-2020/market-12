@@ -21,6 +21,14 @@ router.post("/login", async function (req, res) {
 
 router.post("/register", async function (req, res) {
   var user = req.body;
+  console.log("print user", user);
+  //validation check
+  var checkList = userService.validationCheck(user);
+  console.log("checkList", Object.keys(checkList).length);
+  if (Object.keys(checkList).length > 0) {
+    res.status(200);
+    res.json({ checkList });
+  }
   // 회원가입부분
   var result = await userService.SignUp(user);
 
