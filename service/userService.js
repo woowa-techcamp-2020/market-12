@@ -3,11 +3,13 @@ var validations = require("../service/validations");
 
 function validationCheck(user) {
   var checkId = validations.validateId(user.id);
-  var checkName = validations.validateId(user.name);
-  var checkPassword = validations.validateId(user.password);
-  var checkEmailName = validations.validateId(user.email_username);
-  var checkEmailProvider = validations.validateId(user.email_provider);
-  var checkPhone = validations.validateId(user.phone);
+  var checkName = validations.validateName(user.name);
+  var checkPassword = validations.validatePassword(user.password);
+  var checkEmailName = validations.validateEmailUsername(user.email_username);
+  var checkEmailProvider = validations.validateEmailProvider(
+    user.email_provider
+  );
+  var checkPhone = validations.validatePhoneNumber(user.phone);
 
   var checkList = [];
   if (!checkId) checkList.push("id");
@@ -31,12 +33,10 @@ async function isExist(userId) {
 }
 
 async function SignUp(user) {
-  var res;
-  //validation check
-  var checkList = validationCheck(user);
-
+  var result;
+  var tempUser;
   //검색
-  res = await new Promise((resolve, reject) => {
+  tempUser = await new Promise((resolve, reject) => {
     usersDB.usersDB.findOne({ id: user.id }, (err, docs) => {
       if (err) reject(err);
       resolve(docs);
@@ -44,20 +44,21 @@ async function SignUp(user) {
   });
 
   //있으면
-  if (res) {
-    res = "이미 존재하는 유저입니다";
+  if (tempUser) {
+    result = "exist";
   }
   //없으면
   else {
+    result = "none";
     usersDB.usersDB.insert(user);
-    res = await new Promise((resolve, reject) => {
+    tempUser = await new Promise((resolve, reject) => {
       usersDB.usersDB.findOne({ id: user.id }, (err, docs) => {
         if (err) reject(err);
         resolve(docs);
       });
     });
   }
-  return { res };
+  return { tempUser, result };
 }
 
 function SignIn(id, password) {
@@ -66,7 +67,6 @@ function SignIn(id, password) {
       if (err) reject(err);
       if (!doc) resolve(null);
       else {
-        //const user = new UserDTO(doc, doc.password);
         resolve(doc);
       }
     });

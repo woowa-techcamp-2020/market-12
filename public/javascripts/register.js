@@ -1,3 +1,50 @@
+document.getElementById("register_form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const id = e.target.input_id.value;
+  const password = e.target.input_password.value;
+  const email_username = e.target.input_email_username.value;
+  const email_provider = e.target.input_email_provider.value;
+  const name = e.target.input_name.value;
+  const phone = e.target.input_phone.value;
+
+  fetch("/api/register", {
+    method: "POST",
+    body: JSON.stringify({
+      id,
+      password,
+      name,
+      email_username,
+      email_provider,
+      phone,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.result === "checkFail") {
+        // validation check 해야함
+        console.log("이거 오류났대", res.checkList);
+      } else if (res.result === "ok") {
+        window.location.href = "/complete_register";
+      } else if (res.result === "alreadyExist") {
+        showErrorMessage("이미 존재하는 아이디입니다.");
+      }
+    })
+    .catch((e) => {
+      throw e;
+    });
+});
+
+function showErrorMessage(msg) {
+  document.getElementById("input_id").classList.add("input_alert");
+  document.getElementById("input_id_label").innerText = msg;
+  document.getElementById("input_id_label").classList.add("alert_label");
+  var top = document.getElementById("input_id").offsetTop;
+  window.scrollTo({ top: location, behavior: "smooth" });
+}
+
 /**
  * @param  {string} inputId - input id
  * @param  {(string)=>boolean} validation - validate function that returns true if valid.
