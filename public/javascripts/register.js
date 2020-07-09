@@ -136,53 +136,63 @@ applyValidation("input_phone", validatePhoneNumber, (valid) =>
   valid ? "" : "유효하지 않은 번호입니다."
 );
 
-document.getElementById("div_phone_auth").style.display = "none";
+let stopPhoneAuth = null;
 function startPhoneAuth() {
+  if (stopPhoneAuth) stopPhoneAuth();
   document.getElementById("input_phone").readOnly = true;
   document.getElementById("div_phone_auth").style.display = "inherit";
-  const RemainTime = {
-    minuite: 2,
-    second: 0,
-    subtractASecond: function () {
-      this.second--;
-      if (this.second < 0) {
-        if (this.minuite === 0) return null;
-        this.minuite--;
-        this.second = 59;
-      }
-    },
-    toString: function () {
-      return (
-        ("0" + this.minuite).slice(-2) + ":" + ("0" + this.second).slice(-2)
+
+  const timer = function (min, second, beforeEachCallback, finishCallback) {
+    if (min === 0 && second === 0) {
+      finishCallback();
+      return () => {};
+    }
+    beforeEachCallback(min, second);
+
+    let nextSecond = second - 1;
+    let nextMin = min;
+    if (nextSecond < 0) {
+      nextSecond = 59;
+      nextMin--;
+    }
+
+    const timerId = setTimeout(() => {
+      stopPhoneAuth = timer(
+        nextMin,
+        nextSecond,
+        beforeEachCallback,
+        finishCallback
       );
-    },
+    }, 1000);
+    const interupt = () => {
+      clearTimeout(timerId);
+    };
+    return interupt;
   };
 
-  document.getElementById(
-    "label_phone_auth_remain_time"
-  ).innerText = RemainTime.toString();
-  let intervalId = setInterval(() => {
-    RemainTime.subtractASecond();
-    const remainTime = RemainTime.toString();
-    if (!remainTime) {
-      clearInterval(intervalId);
-      endPhoneAuth();
-      intervalId = null;
-      document.getElementById("label_phone_auth_remain_time").innerText =
-        "유효시간을 초과하였습니다.";
-    } else {
+  stopPhoneAuth = timer(
+    0,
+    10,
+    (min, second) => {
+      const remainTimeString =
+        ("0" + min).slice(-2) + ":" + ("0" + second).slice(-2);
+
       document.getElementById(
         "label_phone_auth_remain_time"
-      ).innerText = remainTime;
+      ).innerText = remainTimeString;
+    },
+    () => {
+      endPhoneAuth();
+      document.getElementById("div_phone_auth").style.display = "none";
+      rejectPhoneAuth("입력시간을 초과했습니다.");
     }
-  }, 1000);
-  const label = document.getElementById("label_phone_auth_remain_time");
-
-  return intervalId;
+  );
 }
 
+/**
+ * reset phone auth number elements. not set display none
+ */
 function endPhoneAuth() {
-  clearInterval(phoneAuthIntervalId);
   document.getElementById("label_phone_auth_remain_time").innerText = "";
   document.getElementById("input_phone_auth").value = "";
   const label = document.getElementById("label_phone_auth");
@@ -193,52 +203,48 @@ function endPhoneAuth() {
     .classList.remove("input_alert");
 }
 
-// 핸드폰 인증 버튼 클릭 이벤트 설정
-let phoneAuthIntervalId = null;
+function confirmPhoneAuth() {
+  endPhoneAuth();
+  document.getElementById("div_phone_auth").style.display = "none";
+  document.getElementById("button_phone_auth").classList.remove("input_button");
+  document.getElementById("button_phone_auth").disabled = true;
+  document.getElementById("button_phone_auth").innerText = "인증 완료";
+}
+
+function rejectPhoneAuth(label) {
+  const labelDom = document.getElementById("label_phone_auth");
+  labelDom.classList.add("alert_label");
+  labelDom.innerText = label;
+  document.getElementById("div_input_phone_auth").classList.add("input_alert");
+}
+
 document.getElementById("button_phone_auth").addEventListener("click", (e) => {
   endPhoneAuth();
   if (validatePhoneNumber(document.getElementById("input_phone").value)) {
-    phoneAuthIntervalId = startPhoneAuth();
+    startPhoneAuth();
   } else {
     document.getElementById("input_phone_label").innerText =
       "유효하지 않은 번호입니다.";
   }
 });
-
-function confirmPhoneAuth() {
-  document.getElementById("div_phone_auth").style.display = "none";
-  document.getElementById("button_phone_auth").classList.remove("input_button");
-  document.getElementById("button_phone_auth").disabled = true;
-  document.getElementById("button_phone_auth").innerText = "인증 완료";
-  endPhoneAuth();
-}
-
-function rejectPhoneAuth() {
-  const label = document.getElementById("label_phone_auth");
-  label.classList.add("alert_label");
-  label.innerText = "인증번호를 확인해 주세요.";
-  document.getElementById("div_input_phone_auth").classList.add("input_alert");
-}
-
-function handlePhoneAuth() {
-  const authNumber = document.getElementById("input_phone_auth").value;
-  fetch("/api/phone_auth?auth_number=" + authNumber)
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .then((res) => {
-      if (res.result === "ok") {
-        confirmPhoneAuth();
-      } else {
-        rejectPhoneAuth();
-      }
-    });
-}
 document
   .getElementById("button_phone_auth_confirm")
-  .addEventListener("click", handlePhoneAuth);
+  .addEventListener("click", () => {
+    const authNumber = document.getElementById("input_phone_auth").value;
+    fetch("/api/phone_auth?auth_number=" + authNumber)
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((res) => {
+        if (res.result === "ok") {
+          confirmPhoneAuth();
+        } else {
+          rejectPhoneAuth("인증번호를 확인해 주세요.");
+        }
+      });
+  });
 
 /**
  * 전체 약관 동의 체크 함수
