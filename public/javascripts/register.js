@@ -17,6 +17,9 @@ function applyValidation(inputId, validation, label) {
       labelDom.classList.add("alert_label");
     }
   });
+
+  console.log(inputId, inputDom.value);
+  // usersDB.findOne(inputDom);
 }
 
 applyValidation("input_id", validateId, (valid) =>
