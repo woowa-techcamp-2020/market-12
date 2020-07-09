@@ -19,16 +19,12 @@ class UserDTO {
    * @param  {string} userInfo.address.detail - 상세주소
    * @param  {boolean} userInfo.agreeEssential
    * @param  {boolean} userInfo.agreeAdvertisement
+   * @param {string} password - db에 저장되는 password 그대로. userInfo에 넣으면 헷갈릴까봐 따로 뺌.
    */
-  constructor({
-    id,
-    email,
-    name,
-    phone,
-    address,
-    agreeEssential,
-    agreeAdvertisement,
-  }) {
+  constructor(
+    { id, email, name, phone, address, agreeEssential, agreeAdvertisement },
+    password
+  ) {
     this.id = id;
     this.email = email;
     this.name = name;
@@ -36,6 +32,8 @@ class UserDTO {
     this.address = address;
     this.agreeAdvertisement = agreeAdvertisement;
     this.agreeEssential = agreeEssential;
+
+    this.password = password;
   }
 
   /**

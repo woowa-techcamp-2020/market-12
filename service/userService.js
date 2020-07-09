@@ -1,4 +1,5 @@
 var usersDB = require("../models/userModel");
+const { UserDTO } = require("../models/userDTO");
 //var usersDB = require("../models/userModel.js");
 async function isExist(userId) {
   var res = await new Promise((resolve, reject) => {
@@ -39,8 +40,16 @@ async function SignUp(user) {
 }
 
 function SignIn(id, password) {
-  const userRecord = "";
-  return { userRecord };
+  return new Promise((resolve, reject) => {
+    usersDB.usersDB.findOne({ id }, (err, doc) => {
+      if (err) reject(err);
+      if (!doc) resolve(null);
+      else {
+        const user = new UserDTO(doc, doc.password);
+        resolve(user);
+      }
+    });
+  });
 }
 
 module.exports = { SignUp, SignIn, isExist };
