@@ -55,4 +55,15 @@ router.get("/phone_auth", function (req, res, next) {
   }
 });
 
+/* GET check whether user with id exists */
+/**
+ * @query {string} id
+ */
+// TODO real check
+router.get("/id_duplication_check", function (req, res, next) {
+  console.log(req.query);
+  if (req.query.id.length > 6) res.json({ result: "ok" });
+  else res.json({ result: "no" });
+});
+
 module.exports = router;

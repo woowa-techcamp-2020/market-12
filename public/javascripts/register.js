@@ -2,30 +2,63 @@
  * @param  {string} inputId - input id
  * @param  {(string)=>boolean} validation - validate function that returns true if valid.
  * @param  {(boolean)=>string} label - a function returns label text
+ * @param {boolean} isAsync - true if validation function is async
  */
-function applyValidation(inputId, validation, label) {
+
+// TODO refactor
+function applyValidation(inputId, validation, label, isAsync) {
   const inputDom = document.getElementById(inputId);
   const labelDom = document.getElementById(inputId + "_label");
   inputDom.addEventListener("focusout", (e) => {
-    const valid = validation(e.target.value);
-    labelDom.innerText = label(valid);
-    if (valid) {
-      inputDom.classList.remove("input_alert");
-      labelDom.classList.remove("alert_label");
+    if (!isAsync) {
+      const valid = validation(e.target.value);
+      labelDom.innerText = label(valid);
+      if (valid) {
+        inputDom.classList.remove("input_alert");
+        labelDom.classList.remove("alert_label");
+      } else {
+        inputDom.classList.add("input_alert");
+        labelDom.classList.add("alert_label");
+      }
     } else {
-      inputDom.classList.add("input_alert");
-      labelDom.classList.add("alert_label");
+      validation(e.target.value)
+        .then((valid) => {
+          // codes only for id duplication check
+          labelDom.innerText = label(valid);
+          if (valid) {
+            inputDom.classList.remove("input_alert");
+            labelDom.classList.remove("alert_label");
+          } else {
+            inputDom.classList.add("input_alert");
+            labelDom.classList.add("alert_label");
+          }
+        })
+        .catch((e) => {
+          throw e;
+        });
     }
   });
-
-  console.log(inputId, inputDom.value);
-  // usersDB.findOne(inputDom);
 }
 
-applyValidation("input_id", validateId, (valid) =>
-  valid
-    ? "입력하신 아이디로 사용이 가능합니다."
-    : "아이디는 4~20자의 영 소문자, 숫자, 특수기호(_), (-)만 사용 가능합니다. "
+applyValidation(
+  "input_id",
+  (id) => {
+    if (!validateId(id)) return Promise.resolve(false);
+    else {
+      return fetch("/api/id_duplication_check?id=" + id)
+        .then((res) => res.json())
+        .then((res) => (res.result === "ok" ? 1 : 0));
+    }
+  },
+  (valid) => {
+    if (valid === false)
+      return "아이디는 4~20자의 영 소문자, 숫자, 특수기호(_), (-)만 사용 가능합니다.";
+    else if (valid === 0)
+      // TODO refactor... duplicated id.
+      return "중복된 아이디입니다.";
+    else return "입력하신 아이디로 사용이 가능합니다.";
+  },
+  true
 );
 
 applyValidation("input_password", validatePassword, (valid) =>
