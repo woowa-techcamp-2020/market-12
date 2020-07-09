@@ -12,7 +12,7 @@ document.getElementById("login_form").addEventListener("submit", (e) => {
   })
     .then((res) => res.json())
     .then((res) => {
-      if (res.result === "ok") res.redirect("/");
+      if (res.result === "ok") window.location.href = "/";
       else {
         showErrorMessage("로그인 정보가 틀렸습니다.");
       }
