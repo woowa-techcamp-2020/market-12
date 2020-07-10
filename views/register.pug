@@ -42,7 +42,7 @@ block content
         label.description_label#input_name_label( for="input_name")
 
       div.flex_row
-        input.input.input_notrow#input_phone( type="text", name="phone", placeholder="휴대폰*", required)
+        input.input.input_notrow#input_phone( type="text", name="phone", placeholder="휴대폰*", required, oninput="numberCheck()")
         button.button.input_button.margin-left10#button_phone_auth(, type="button") 인증받기
       div.margin0
         label.description_label#input_phone_label(for="input_phone")

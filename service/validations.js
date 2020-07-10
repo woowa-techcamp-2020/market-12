@@ -47,7 +47,7 @@ function validateName(name) {
  * @returns {boolean}
  */
 function validatePhoneNumber(phoneNumber) {
-  return /^01[01679]\d{7,8}$/.test(phoneNumber);
+  return /^01[01679]-\d{3,4}-\d{4}$/.test(phoneNumber);
 }
 
 module.exports = {

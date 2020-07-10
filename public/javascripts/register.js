@@ -24,8 +24,7 @@ document.getElementById("register_form").addEventListener("submit", (e) => {
     .then((res) => res.json())
     .then((res) => {
       if (res.result === "checkFail") {
-        // validation check 해야함
-        console.log("이거 오류났대", res.checkList);
+        checkAllValidation(res.checkList);
       } else if (res.result === "ok") {
         window.location.href = "/complete_register";
       } else if (res.result === "alreadyExist") {
@@ -37,6 +36,25 @@ document.getElementById("register_form").addEventListener("submit", (e) => {
     });
 });
 
+function checkAllValidation(checkList) {
+  //console.log("checkList", checkList);
+  checkList.forEach((element) => {
+    if (element == "id") {
+      checkIdValidation();
+    } else if (element == "name") {
+      checkNameValidation();
+    } else if (element == "password") {
+      checkPasswordValidation();
+    } else if (element == "phone") {
+      checkPhoneValidation();
+    } else if (element == "email_username") {
+      checkEmailNameValidation();
+    } else if (element == "email_provider") {
+      checkEmailProviderValidation();
+    }
+  });
+}
+
 function showErrorMessage(msg) {
   document.getElementById("input_id").classList.add("input_alert");
   document.getElementById("input_id_label").innerText = msg;
@@ -45,6 +63,97 @@ function showErrorMessage(msg) {
   window.scrollTo({ top: location, behavior: "smooth" });
 }
 
+function checkIdValidation() {
+  var val = document.getElementById("input_id").value;
+  if (!validateId(val)) {
+    applyIdValidation(
+      "아이디는 4~20자의 영 소문자, 숫자, 특수기호(_), (-)만 사용 가능합니다."
+    );
+  }
+}
+
+function applyIdValidation(msg) {
+  document.getElementById("input_id").classList.add("input_alert");
+  document.getElementById("input_id_label").innerText = msg;
+  document.getElementById("input_id_label").classList.add("alert_label");
+  var top = document.getElementById("input_id").offsetTop;
+  window.scrollTo({ top: top - 30, behavior: "smooth" });
+}
+
+function checkNameValidation() {
+  var val = document.getElementById("input_name").value;
+  if (!validateName(val)) {
+    applyNameValidation("이름에 특수문자 또는 숫자를 포함할 수 없습니다.");
+  }
+}
+
+function applyNameValidation(msg) {
+  document.getElementById("input_name").classList.add("input_alert");
+  document.getElementById("input_name_label").innerText = msg;
+  document.getElementById("input_name_label").classList.add("alert_label");
+  var top = document.getElementById("input_name").offsetTop;
+  window.scrollTo({ top: top - 30, behavior: "smooth" });
+}
+
+function checkPasswordValidation() {
+  var val = document.getElementById("input_password").value;
+  if (!validatePassword(val)) {
+    applyPasswordValidation(
+      "비밀번호는 영문과 숫자 포함해서 8~20자로 입력해주세요."
+    );
+  }
+}
+
+function applyPasswordValidation(msg) {
+  document.getElementById("input_password").classList.add("input_alert");
+  document.getElementById("input_password_label").innerText = msg;
+  document.getElementById("input_password_label").classList.add("alert_label");
+  var top = document.getElementById("input_password").offsetTop;
+  window.scrollTo({ top: top - 30, behavior: "smooth" });
+}
+
+function checkPhoneValidation() {
+  var val = document.getElementById("input_phone").value;
+  if (!validatePhoneNumber(val)) {
+    applyPhoneValidation("유효하지 않은 번호입니다.");
+  }
+}
+
+function applyPhoneValidation(msg) {
+  document.getElementById("input_phone").classList.add("input_alert");
+  document.getElementById("input_phone_label").innerText = msg;
+  document.getElementById("input_phone_label").classList.add("alert_label");
+  var top = document.getElementById("input_phone").offsetTop;
+  window.scrollTo({ top: top - 30, behavior: "smooth" });
+}
+
+function checkEmailNameValidation() {
+  var val = document.getElementById("input_email_username").value;
+  if (!validateEmailUsername(val)) {
+    applyEmailNameValidation("유효하지 않은 이메일입니다.");
+  }
+}
+
+function applyEmailNameValidation(msg) {
+  document.getElementById("input_email_username").classList.add("input_alert");
+  document.getElementById("input_email_label").innerText = msg;
+  document.getElementById("input_email_label").classList.add("alert_label");
+  var top = document.getElementById("input_email_username").offsetTop;
+  window.scrollTo({ top: top - 30, behavior: "smooth" });
+}
+function checkEmailProviderValidation() {
+  var val = document.getElementById("input_email_provider").value;
+  if (!validateEmailProvider(val)) {
+    applyEmailProviderValidation("유효하지 않은 이메일입니다.");
+  }
+}
+function applyEmailProviderValidation(msg) {
+  document.getElementById("input_email_provider").classList.add("input_alert");
+  document.getElementById("input_email_label").innerText = msg;
+  document.getElementById("input_email_label").classList.add("alert_label");
+  var top = document.getElementById("input_email_provider").offsetTop;
+  window.scrollTo({ top: top - 30, behavior: "smooth" });
+}
 /**
  * @param  {string} inputId - input id
  * @param  {(string)=>boolean} validation - validate function that returns true if valid.
@@ -103,7 +212,7 @@ function showErrorMessage(msg) {
         return "아이디는 4~20자의 영 소문자, 숫자, 특수기호(_), (-)만 사용 가능합니다.";
       else if (valid === 0)
         // TODO refactor... duplicated id.
-        return "중복된 아이디입니다.";
+        return "이미 존재하는 아이디입니다.";
       else return "입력하신 아이디로 사용이 가능합니다.";
     },
     true
@@ -133,7 +242,7 @@ function showErrorMessage(msg) {
 
     function check() {
       let valid = true;
-      if (validateEmailPrivider(providerInput.value)) {
+      if (validateEmailProvider(providerInput.value)) {
         providerInput.classList.remove("input_alert");
       } else {
         valid = false;
@@ -382,6 +491,36 @@ function stopPropagation(event) {
   event.stopPropagation();
 }
 
+function numberCheck() {
+  var num = document.getElementById("input_phone").value;
+
+  num = num.replace(/-/g, "");
+  if (num.length == 2) {
+    if (num != "01") num = "01";
+  }
+
+  if (num.length > 3 && num.charAt(2) == "0" && num.length <= 7) {
+    num = num.substr(0, 3) + "-" + num.substr(3);
+  } else if (num.length > 7 && num.charAt(2) == "0") {
+    num = num.substr(0, 3) + "-" + num.substr(3, 4) + "-" + num.substr(7);
+  }
+
+  if (num.length > 3 && num.charAt(2) != "0" && num.length <= 6) {
+    num = num.substr(0, 3) + "-" + num.substr(3);
+  } else if (num.length > 6 && num.charAt(2) != "0") {
+    num = num.substr(0, 3) + "-" + num.substr(3, 3) + "-" + num.substr(6);
+  }
+
+  document.getElementById("input_phone").value = num;
+
+  if (num.length > 12) {
+    if (num.charAt(2) == 0) {
+      document.getElementById("input_phone").value = num.substr(0, 13);
+    } else {
+      document.getElementById("input_phone").value = num.substr(0, 12);
+    }
+  }
+}
 /**
  * 주소 검색 api랑 연동하면 될듯
  */

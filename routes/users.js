@@ -21,11 +21,9 @@ router.post("/login", async function (req, res) {
 
 router.post("/register", async function (req, res) {
   var user = req.body;
-  console.log("print user", user);
-  //validation check
-  var checkList = userService.validationCheck(user);
 
-  console.log("checkList", checkList, checkList.length);
+  //validation 체크
+  var checkList = userService.validationCheck(user);
 
   if (checkList.length > 0) {
     res.status(200);
