@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    .simple_border.flex_column.complete_register_wrapper.padding2
+        include includes/logo.pug
+        h1 회원이 되셨습니다.
+
+        a.blue_label.complete_box_main_link(href="/") 메인으로 →
+
+        div.complete_register_inner_box
+            div
+                span.complete_register_info_name 이름
+                span.guide_label= user.name
+            div
+                span.complete_register_info_name 아이디
+                span.guide_label= user.id
+            div
+                span.complete_register_info_name 이메일
+                span.guide_label= user.name
+            div
+                span.complete_register_info_name 휴대폰
+                span.guide_label= user.phone
+        ul
+            li.description_label
+                | 위 내용은 
+                a(href="#") 내 정보 관리
+                | 에서 수정하실 수 있습니다.

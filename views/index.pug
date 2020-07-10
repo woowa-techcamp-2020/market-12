@@ -1,5 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div.flex_column.simple_border#main_page.padding2
+    if !user
+      div.header_label 사장님, 로그인해주세요!
+      a.button.submit_button.text_center(href="/login") 배민사장님광장 로그인
+      ul
+        li
+          a.description_label(href="#") 아이디/비밀번호 찾기
+        li
+          a.description_label(href="/register") 회원가입
+    else
+      div #{user.id}님, 안녕하세요.
+      a.button.submit_button.text_center(href="/logout") 배민사장님광장 로그아웃

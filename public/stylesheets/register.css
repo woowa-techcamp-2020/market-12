@@ -1,0 +1,71 @@
+#overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: none; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+
+#overlay-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: white;
+}
+
+#overlay_wrapper_header {
+  background-color: var(--color-blue);
+  display: flex;
+  justify-content: space-between;
+  color: white;
+}
+
+#overlay_wrapper_header button {
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+#overlay-wrapper-contents-search {
+  width: 100%;
+  display: flex;
+  border-bottom: 1px solid black;
+  height: 50px;
+}
+
+#addressSearchInput {
+  flex-grow: 1;
+  border: none;
+}
+
+#overlay-wrapper-contents-search > button {
+  font-size: 30px;
+}
+
+#overlay_wrapper_footer {
+  background-color: lightgray;
+  height: 1rem;
+  border-top: gray;
+}
+
+#div_terms_of_use {
+  margin-left: 20px;
+}
+#div_terms_of_use a {
+  font-size: 16px !important;
+}
+#div_phone_auth input {
+  border: none;
+}
+
+#register_form > div {
+  margin: 0.5rem 0;
+}
