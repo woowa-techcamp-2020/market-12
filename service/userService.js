@@ -1,5 +1,6 @@
 var usersDB = require("../models/userModel");
 var validations = require("../service/validations");
+var bcrypt = require("bcrypt");
 
 function validationCheck(user) {
   var checkId = validations.validateId(user.id);
@@ -50,6 +51,7 @@ async function SignUp(user) {
   //없으면
   else {
     result = "none";
+    user.password = await bcrypt.hash(user.password, 10);
     usersDB.usersDB.insert(user);
     tempUser = await new Promise((resolve, reject) => {
       usersDB.usersDB.findOne({ id: user.id }, (err, docs) => {
@@ -62,12 +64,15 @@ async function SignUp(user) {
 }
 
 function SignIn(id, password) {
-  return new Promise((resolve, reject) => {
-    usersDB.usersDB.findOne({ id, password }, (err, doc) => {
+  return new Promise(async (resolve, reject) => {
+    usersDB.usersDB.findOne({ id }, (err, doc) => {
       if (err) reject(err);
-      if (!doc) resolve(null);
+      else if (!doc) resolve(null);
       else {
-        resolve(doc);
+        bcrypt.compare(password, doc.password, (err, valid) => {
+          if (err) reject(err);
+          else resolve(valid ? doc : null);
+        });
       }
     });
   });
