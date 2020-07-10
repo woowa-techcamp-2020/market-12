@@ -12,7 +12,6 @@ document.getElementById("register_form").addEventListener("submit", (e) => {
   const optionalInfoCheck = e.target.optionalInfoCheck.checked;
   if (optionalInfoCheck) {
   }
-  const agreeEssential = e.target.agreeEssential.value;
   const agreeAdvertisement = e.target.agreeAdvertisement.value;
 
   fetch("/api/register", {
