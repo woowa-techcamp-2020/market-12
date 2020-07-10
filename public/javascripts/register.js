@@ -5,6 +5,7 @@ document.getElementById("register_form").addEventListener("submit", (e) => {
   const passwordCheck = e.target.input_password_check.value;
   const email_username = e.target.input_email_username.value;
   const email_provider = e.target.input_email_provider.value;
+
   const name = e.target.input_name.value;
   const phone = e.target.input_phone.value;
   const agreeEssential = document.getElementById("agreeEssential").checked;
@@ -47,8 +48,6 @@ document.getElementById("register_form").addEventListener("submit", (e) => {
 });
 
 function checkAllValidation(checkList) {
-  //console.log("checkList", checkList);
-
   document.getElementById("agree_essential_label").innerText = "";
   checkList.forEach((element) => {
     if (element == "id") {
@@ -349,7 +348,7 @@ function checkAgreeEssentialValidaion() {
     };
 
     stopPhoneAuth = timer(
-      10,
+      20,
       (second) => {
         const remainTimeString = [~~(second / 60), second % 60]
           .map((x) => (x >= 10 ? x : "0" + x))

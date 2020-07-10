@@ -3,7 +3,6 @@ extends layout
 block content
   #wrapper.simple_border.padding2
     include includes/logo.pug
-    input#testButton(type="button", value="test", onclick="test()")
 
     form#register_form(action='/api/register', method='POST').centered_layout.flex_stretch
       div.guide_label 필수 정보를 입력해주세요.
