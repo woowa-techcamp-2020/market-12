@@ -2,20 +2,30 @@ document.getElementById("register_form").addEventListener("submit", (e) => {
   e.preventDefault();
   const id = e.target.input_id.value;
   const password = e.target.input_password.value;
+  const passwordCheck = e.target.input_password_check.value;
   const email_username = e.target.input_email_username.value;
   const email_provider = e.target.input_email_provider.value;
   const name = e.target.input_name.value;
   const phone = e.target.input_phone.value;
+  const agreeEssential = document.getElementById("agreeEssential").checked;
+  const phone_auth = e.target.input_phone_auth.value;
+  const optionalInfoCheck = e.target.optionalInfoCheck.checked;
+  if (optionalInfoCheck) {
+  }
+  const agreeAdvertisement = e.target.agreeAdvertisement.value;
 
   fetch("/api/register", {
     method: "POST",
     body: JSON.stringify({
       id,
       password,
+      passwordCheck,
       name,
       email_username,
       email_provider,
       phone,
+      agree_essential: agreeEssential,
+      phone_auth,
     }),
     headers: {
       "Content-Type": "application/json",
@@ -38,6 +48,8 @@ document.getElementById("register_form").addEventListener("submit", (e) => {
 
 function checkAllValidation(checkList) {
   //console.log("checkList", checkList);
+
+  document.getElementById("agree_essential_label").innerText = "";
   checkList.forEach((element) => {
     if (element == "id") {
       checkIdValidation();
@@ -51,6 +63,8 @@ function checkAllValidation(checkList) {
       checkEmailNameValidation();
     } else if (element == "email_provider") {
       checkEmailProviderValidation();
+    } else if (element == "agree_essential") {
+      checkAgreeEssentialValidaion();
     }
   });
 }
@@ -153,6 +167,11 @@ function applyEmailProviderValidation(msg) {
   document.getElementById("input_email_label").classList.add("alert_label");
   var top = document.getElementById("input_email_provider").offsetTop;
   window.scrollTo({ top: top - 30, behavior: "smooth" });
+}
+
+function checkAgreeEssentialValidaion() {
+  document.getElementById("agree_essential_label").innerText =
+    "필수 항목에 동의해주세요.";
 }
 /**
  * @param  {string} inputId - input id
