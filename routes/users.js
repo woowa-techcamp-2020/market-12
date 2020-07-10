@@ -37,13 +37,12 @@ router.post("/register", async function (req, res) {
   var result = await userService.SignUp(user);
   if (result.result == "exist") {
     res.json({ result: "alreadyExist" });
-    return;
+  } else {
+    // 유저 정보 세션 저장
+    user = result.user;
+    res.session.setSession({ user });
+    res.json({ result: "ok" });
   }
-
-  // 유저 정보 세션 저장
-  user = result.tempUser;
-  res.session.setSession({ user });
-  res.json({ result: "ok" });
 });
 
 /* GET compelete register page. */
