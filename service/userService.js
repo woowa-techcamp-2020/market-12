@@ -18,6 +18,7 @@ function validationCheck(user) {
   if (!checkEmailProvider) checkList.push("email_provider");
   if (!checkPassword) checkList.push("password");
   if (!checkId) checkList.push("id");
+  if (!user.agree_essential) checkList.push("agree_essential");
   return checkList;
 }
 
