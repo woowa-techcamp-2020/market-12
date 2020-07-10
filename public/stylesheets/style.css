@@ -1,5 +1,5 @@
 :root {
-  --color-blue: blue;
+  --color-blue: #197cfe;
 }
 
 body {
@@ -112,13 +112,13 @@ a {
 }
 
 .input_button {
-  color: blue;
-  border-color: blue;
+  color: var(--color-blue);
+  border-color: var(--color-blue);
   background-color: transparent;
 }
 
 .submit_button {
-  background-color: blue;
+  background-color: var(--color-blue);
   color: white;
   margin-top: 2rem;
 }
@@ -142,7 +142,7 @@ a {
 }
 
 .blue_label {
-  color: blue;
+  color: var(--color-blue);
 }
 
 .header_label {
