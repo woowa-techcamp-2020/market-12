@@ -16,5 +16,5 @@
 
 # 로그인 페이지
 ## Test account
-- id: wawoo1234
+- id: woowa1234
 - password: testpw1234
