@@ -1,5 +1,6 @@
 var usersDB = require("../models/userModel");
 var validations = require("../service/validations");
+var bcrypt = require("bcrypt");
 
 function validationCheck(user) {
   var checkId = validations.validateId(user.id);
@@ -34,8 +35,8 @@ async function isExist(userId) {
 }
 
 async function SignUp(user) {
-  var result;
-  var tempUser;
+  let tempUser = null;
+
   //검색
   tempUser = await new Promise((resolve, reject) => {
     usersDB.usersDB.findOne({ id: user.id }, (err, docs) => {
@@ -46,11 +47,9 @@ async function SignUp(user) {
 
   //있으면
   if (tempUser) {
-    result = "exist";
-  }
-  //없으면
-  else {
-    result = "none";
+    return { result: "exist" };
+  } else {
+    user.password = await bcrypt.hash(user.password, 10);
     usersDB.usersDB.insert(user);
     tempUser = await new Promise((resolve, reject) => {
       usersDB.usersDB.findOne({ id: user.id }, (err, docs) => {
@@ -58,17 +57,20 @@ async function SignUp(user) {
         resolve(docs);
       });
     });
+    return { user: tempUser, result: "none" };
   }
-  return { tempUser, result };
 }
 
 function SignIn(id, password) {
-  return new Promise((resolve, reject) => {
-    usersDB.usersDB.findOne({ id, password }, (err, doc) => {
+  return new Promise(async (resolve, reject) => {
+    usersDB.usersDB.findOne({ id }, (err, doc) => {
       if (err) reject(err);
-      if (!doc) resolve(null);
+      else if (!doc) resolve(null);
       else {
-        resolve(doc);
+        bcrypt.compare(password, doc.password, (err, valid) => {
+          if (err) reject(err);
+          else resolve(valid ? doc : null);
+        });
       }
     });
   });

@@ -2,22 +2,31 @@ document.getElementById("register_form").addEventListener("submit", (e) => {
   e.preventDefault();
   const id = e.target.input_id.value;
   const password = e.target.input_password.value;
+  const passwordCheck = e.target.input_password_check.value;
   const email_username = e.target.input_email_username.value;
   const email_provider = e.target.input_email_provider.value;
   const name = e.target.input_name.value;
   const phone = e.target.input_phone.value;
   const agreeEssential = document.getElementById("agreeEssential").checked;
+  const phone_auth = e.target.input_phone_auth.value;
+  const optionalInfoCheck = e.target.optionalInfoCheck.checked;
+  if (optionalInfoCheck) {
+  }
+  const agreeEssential = e.target.agreeEssential.value;
+  const agreeAdvertisement = e.target.agreeAdvertisement.value;
 
   fetch("/api/register", {
     method: "POST",
     body: JSON.stringify({
       id,
       password,
+      passwordCheck,
       name,
       email_username,
       email_provider,
       phone,
       agree_essential: agreeEssential,
+      phone_auth,
     }),
     headers: {
       "Content-Type": "application/json",
