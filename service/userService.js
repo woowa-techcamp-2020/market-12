@@ -34,8 +34,8 @@ async function isExist(userId) {
 }
 
 async function SignUp(user) {
-  var result;
-  var tempUser;
+  let tempUser = null;
+
   //검색
   tempUser = await new Promise((resolve, reject) => {
     usersDB.usersDB.findOne({ id: user.id }, (err, docs) => {
@@ -46,11 +46,8 @@ async function SignUp(user) {
 
   //있으면
   if (tempUser) {
-    result = "exist";
-  }
-  //없으면
-  else {
-    result = "none";
+    return { result: "exist" };
+  } else {
     user.password = await bcrypt.hash(user.password, 10);
     usersDB.usersDB.insert(user);
     tempUser = await new Promise((resolve, reject) => {
@@ -59,8 +56,8 @@ async function SignUp(user) {
         resolve(docs);
       });
     });
+    return { user: tempUser, result: "none" };
   }
-  return { tempUser, result };
 }
 
 function SignIn(id, password) {
